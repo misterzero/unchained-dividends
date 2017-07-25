@@ -36,4 +36,9 @@ public class Web3JTestRPCServiceImplIntTest {
         assertThat(web3JService.getAccountMap().values().toArray()[0].getClass().equals(BigDecimal.class));
     }
 
+    @Test
+    public void testGetAccountData() throws ExecutionException, InterruptedException {
+        assertThat(web3JService.getAccountData().get(0).get(2).equals(BigDecimal.class));
+    }
+
 }

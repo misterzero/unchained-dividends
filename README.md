@@ -3,6 +3,13 @@ This application was generated using JHipster 4.5.1, you can find documentation 
 
 ## Development
 
+Before configuring dependencies to build this project, you will need to set up an environment, byt following the below steps:
+
+1. [TestRPC]: We need ot install a local ethereum network
+    - Once installed, run the below command in a seperate terminal with default accounts:
+    
+        testrpc --account="0x259b452db2511c99382850b30ce76bc422baf5a0269cfad7ba3ad014bec801c1, 10000000000000000000" --account="0xbb97e2df4ca96b843d10779669839861bd442940f8c9ce46c2854f9364aeb304, 10000000000000000000" --account="0x4a4d567ae46123e06cc0f7ef7576c0db681702e98875e78274a5c86702b96818, 10000000000000000000" --account="0x4b13837e8640c99661d2402d87d37dd6a821cfa36c6720234a21fc2a79626f98, 10000000000000000000" --account="0xbe0866a3c4bb0a282fe67c9543a63edd12d04ca53df5f28ebc190cf10dfa864f, 10000000000000000000" --account="0x553a04d0cdcbb77c18b0e7ef871127b72b9f7c142e3c46cf34b74f2e7a0ec112, 10000000000000000000" --account="0xa4f829e31754082e5f6a2209a4cdae33783ba93fc887653672ed83d46e18a09b, 10000000000000000000" --account="0x5c6e0c9d7002ccee337a00968c33b8d544d433890e646fef8a8ac1df272a8fdf, 10000000000000000000" --account="0x37043c493d4e3fc1e57d1b79237a457980c92012bdea973c74fd363d98f8f00d, 10000000000000000000" --account="0x0f3853d8a00ac4482d76b77114b72b6b3fa3ccb7877414be86b4b0e384f24f25, 10000000000000000000" 
+        
 Before you can build this project, you must install and configure the following dependencies on your machine:
 
 1. [Node.js][]: We use Node to run a development web server and build the project.
@@ -147,3 +154,6 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [Protractor]: https://angular.github.io/protractor/
 [Leaflet]: http://leafletjs.com/
 [DefinitelyTyped]: http://definitelytyped.org/
+[TestRPC]: https://github.com/ethereumjs/testrpc 
+[Truffle]: https://github.com/trufflesuite/truffle
+[Solidity browser]: https://ethereum.github.io/browser-solidity/#version=soljson-v0.4.13+commit.fb4cb1a.js 
