@@ -154,6 +154,4 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [Protractor]: https://angular.github.io/protractor/
 [Leaflet]: http://leafletjs.com/
 [DefinitelyTyped]: http://definitelytyped.org/
-[TestRPC]: https://github.com/ethereumjs/testrpc 
-[Truffle]: https://github.com/trufflesuite/truffle
-[Solidity browser]: https://ethereum.github.io/browser-solidity/#version=soljson-v0.4.13+commit.fb4cb1a.js 
+[TestRPC]: https://github.com/ethereumjs/testrpc  
