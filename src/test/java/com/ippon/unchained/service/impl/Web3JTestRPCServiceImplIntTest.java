@@ -1,7 +1,7 @@
-package com.ippon.unchained.service;
+package com.ippon.unchained.service.impl;
 
 import com.ippon.unchained.UnchainedApp;
-import org.apache.http.conn.HttpHostConnectException;
+import com.ippon.unchained.service.Web3JService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,19 +10,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UnchainedApp.class)
-public class Web3JServiceIntTest {
+public class Web3JTestRPCServiceImplIntTest {
 
     @Autowired
     Web3JService web3JService;
-
 
     @Test
     public void testGetClientVersion() throws IOException {
@@ -38,4 +35,5 @@ public class Web3JServiceIntTest {
     public void testGetAccountMapItemValue() throws ExecutionException, InterruptedException {
         assertThat(web3JService.getAccountMap().values().toArray()[0].getClass().equals(BigDecimal.class));
     }
+
 }
