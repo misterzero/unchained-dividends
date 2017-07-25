@@ -89,6 +89,9 @@
         <springfox.version>2.6.1</springfox.version>
         <validation-api.version>1.1.0.Final</validation-api.version>
         <yarn.version>v0.24.4</yarn.version>
+
+        <!-- Ethereum Properties -->
+        <ethereum.contract.name>HelloWorld</ethereum.contract.name>
     </properties>
 
 
@@ -547,6 +550,58 @@
                     </resources>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                <execution>
+                    <phase>generate-resources</phase>
+                    <id>eth-contract-compile</id>
+                    <goals>
+                    <goal>exec</goal>
+                    </goals>
+                    <configuration>
+                    <executable>solc</executable>
+                    <!-- optional -->
+                    <workingDirectory>src/main/resources/solidity/contracts</workingDirectory>
+                    <arguments>
+                        <argument>${ethereum.contract.name}.sol</argument>
+                        <commandLineArgs>--bin</commandLineArgs>
+                        <commandLineArgs>--abi</commandLineArgs>
+                        <commandLineArgs>--optimize</commandLineArgs> 
+                        <commandLineArgs>--overwrite</commandLineArgs> 
+                        <argument>-o</argument>
+                        <argument>deployables</argument>
+                    </arguments>
+                    </configuration>
+                </execution>
+                <execution>
+                    <phase>generate-resources</phase>
+                    <id>eth-contract-wrapper</id>
+                    <goals>
+                    <goal>exec</goal>
+                    </goals>
+                    <configuration>
+                    <executable>web3j</executable>
+                    <!-- optional -->
+                    <workingDirectory>src/main/resources/solidity/contracts</workingDirectory>
+                    <arguments>        
+                        <argument>solidity</argument>
+                        <argument>generate</argument>
+                        <argument>deployables/${ethereum.contract.name}.bin</argument>
+                        <argument>deployables/${ethereum.contract.name}.abi</argument> 
+                        <argument>--package</argument> 
+                        <argument>com.ippon.unchained.service.solidity</argument>
+                        <argument>-o</argument> 
+                        <argument>../../../java/</argument>
+                    </arguments>
+                </configuration>
+                </execution>
+                </executions>
+                
+            </plugin>
+            
             <!-- jhipster-needle-maven-add-plugin -->
         </plugins>
         <pluginManagement>
