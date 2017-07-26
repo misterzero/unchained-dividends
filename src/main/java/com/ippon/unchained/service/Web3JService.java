@@ -14,5 +14,5 @@ public interface Web3JService {
 
     List<List<Object>> getAccountData() throws ExecutionException, InterruptedException;
 
-
+    String getContractAddress();
 }
