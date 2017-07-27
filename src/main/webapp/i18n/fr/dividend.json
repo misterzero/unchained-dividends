@@ -1,0 +1,22 @@
+{
+    "unchainedApp": {
+        "dividend" : {
+            "home": {
+                "title": "Dividends",
+                "createLabel": "Créer un nouveau Dividend",
+                "createOrEditLabel": "Créer ou éditer un Dividend"
+            },
+            "created": "Un nouveau Dividend a été créé avec l'identifiant {{ param }}",
+            "updated": "Le Dividend avec l'identifiant {{ param }} a été mis à jour",
+            "deleted": "Le Dividend avec l'identifiant {{ param }} a été supprimé",
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Dividend {{ id }} ?"
+            },
+            "detail": {
+                "title": "Dividend"
+            },
+            "date": "Date",
+            "amount": "Amount"
+        }
+    }
+}

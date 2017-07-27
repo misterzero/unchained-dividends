@@ -1,0 +1,30 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "investor",
+            "otherEntityName": "investor",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "roundOfInvestment"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "endDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "totalMoneyInvested",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "tokenValue",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20170727151830",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "round_of_investment",
+    "pagination": "no"
+}
