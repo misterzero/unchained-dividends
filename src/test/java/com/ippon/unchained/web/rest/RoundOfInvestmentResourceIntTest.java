@@ -46,6 +46,9 @@ public class RoundOfInvestmentResourceIntTest {
     private static final Double DEFAULT_TOTAL_MONEY_INVESTED = 1D;
     private static final Double UPDATED_TOTAL_MONEY_INVESTED = 2D;
 
+    private static final Integer DEFAULT_TOKEN_VALUE = 1;
+    private static final Integer UPDATED_TOKEN_VALUE = 2;
+
     @Autowired
     private RoundOfInvestmentRepository roundOfInvestmentRepository;
 
@@ -87,7 +90,8 @@ public class RoundOfInvestmentResourceIntTest {
     public static RoundOfInvestment createEntity(EntityManager em) {
         RoundOfInvestment roundOfInvestment = new RoundOfInvestment()
             .endDate(DEFAULT_END_DATE)
-            .totalMoneyInvested(DEFAULT_TOTAL_MONEY_INVESTED);
+            .totalMoneyInvested(DEFAULT_TOTAL_MONEY_INVESTED)
+            .tokenValue(DEFAULT_TOKEN_VALUE);
         return roundOfInvestment;
     }
 
@@ -113,6 +117,7 @@ public class RoundOfInvestmentResourceIntTest {
         RoundOfInvestment testRoundOfInvestment = roundOfInvestmentList.get(roundOfInvestmentList.size() - 1);
         assertThat(testRoundOfInvestment.getEndDate()).isEqualTo(DEFAULT_END_DATE);
         assertThat(testRoundOfInvestment.getTotalMoneyInvested()).isEqualTo(DEFAULT_TOTAL_MONEY_INVESTED);
+        assertThat(testRoundOfInvestment.getTokenValue()).isEqualTo(DEFAULT_TOKEN_VALUE);
     }
 
     @Test
@@ -146,7 +151,8 @@ public class RoundOfInvestmentResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(roundOfInvestment.getId().intValue())))
             .andExpect(jsonPath("$.[*].endDate").value(hasItem(DEFAULT_END_DATE.toString())))
-            .andExpect(jsonPath("$.[*].totalMoneyInvested").value(hasItem(DEFAULT_TOTAL_MONEY_INVESTED.doubleValue())));
+            .andExpect(jsonPath("$.[*].totalMoneyInvested").value(hasItem(DEFAULT_TOTAL_MONEY_INVESTED.doubleValue())))
+            .andExpect(jsonPath("$.[*].tokenValue").value(hasItem(DEFAULT_TOKEN_VALUE)));
     }
 
     @Test
@@ -161,7 +167,8 @@ public class RoundOfInvestmentResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(roundOfInvestment.getId().intValue()))
             .andExpect(jsonPath("$.endDate").value(DEFAULT_END_DATE.toString()))
-            .andExpect(jsonPath("$.totalMoneyInvested").value(DEFAULT_TOTAL_MONEY_INVESTED.doubleValue()));
+            .andExpect(jsonPath("$.totalMoneyInvested").value(DEFAULT_TOTAL_MONEY_INVESTED.doubleValue()))
+            .andExpect(jsonPath("$.tokenValue").value(DEFAULT_TOKEN_VALUE));
     }
 
     @Test
@@ -184,7 +191,8 @@ public class RoundOfInvestmentResourceIntTest {
         RoundOfInvestment updatedRoundOfInvestment = roundOfInvestmentRepository.findOne(roundOfInvestment.getId());
         updatedRoundOfInvestment
             .endDate(UPDATED_END_DATE)
-            .totalMoneyInvested(UPDATED_TOTAL_MONEY_INVESTED);
+            .totalMoneyInvested(UPDATED_TOTAL_MONEY_INVESTED)
+            .tokenValue(UPDATED_TOKEN_VALUE);
 
         restRoundOfInvestmentMockMvc.perform(put("/api/round-of-investments")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -197,6 +205,7 @@ public class RoundOfInvestmentResourceIntTest {
         RoundOfInvestment testRoundOfInvestment = roundOfInvestmentList.get(roundOfInvestmentList.size() - 1);
         assertThat(testRoundOfInvestment.getEndDate()).isEqualTo(UPDATED_END_DATE);
         assertThat(testRoundOfInvestment.getTotalMoneyInvested()).isEqualTo(UPDATED_TOTAL_MONEY_INVESTED);
+        assertThat(testRoundOfInvestment.getTokenValue()).isEqualTo(UPDATED_TOKEN_VALUE);
     }
 
     @Test

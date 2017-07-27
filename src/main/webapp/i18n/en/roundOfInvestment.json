@@ -17,6 +17,7 @@
             },
             "endDate": "End Date",
             "totalMoneyInvested": "Total Money Invested",
+            "tokenValue": "Token Value",
             "investor": "Investor"
         }
     }

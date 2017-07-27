@@ -4,6 +4,7 @@ export class RoundOfInvestment {
         public id?: number,
         public endDate?: any,
         public totalMoneyInvested?: number,
+        public tokenValue?: number,
         public investor?: Investor,
     ) {
     }

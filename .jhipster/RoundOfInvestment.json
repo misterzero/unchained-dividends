@@ -16,6 +16,10 @@
         {
             "fieldName": "totalMoneyInvested",
             "fieldType": "Double"
+        },
+        {
+            "fieldName": "tokenValue",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20170727151830",

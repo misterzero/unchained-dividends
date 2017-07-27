@@ -19,6 +19,7 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="unchainedApp.roundOfInvestment.endDate">End Date</span></th>
             <th><span jhiTranslate="unchainedApp.roundOfInvestment.totalMoneyInvested">Total Money Invested</span></th>
+            <th><span jhiTranslate="unchainedApp.roundOfInvestment.tokenValue">Token Value</span></th>
             <th></th>
             </tr>
             </thead>
@@ -27,6 +28,7 @@
                 <td><a [routerLink]="['../round-of-investment', roundOfInvestment.id ]">{{roundOfInvestment.id}}</a></td>
                 <td>{{roundOfInvestment.endDate | date:'mediumDate'}}</td>
                 <td>{{roundOfInvestment.totalMoneyInvested}}</td>
+                <td>{{roundOfInvestment.tokenValue}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

@@ -31,6 +31,9 @@ public class RoundOfInvestment implements Serializable {
     @Column(name = "total_money_invested")
     private Double totalMoneyInvested;
 
+    @Column(name = "token_value")
+    private Integer tokenValue;
+
     @OneToMany(mappedBy = "roundOfInvestment")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -70,6 +73,19 @@ public class RoundOfInvestment implements Serializable {
         this.totalMoneyInvested = totalMoneyInvested;
     }
 
+    public Integer getTokenValue() {
+        return tokenValue;
+    }
+
+    public RoundOfInvestment tokenValue(Integer tokenValue) {
+        this.tokenValue = tokenValue;
+        return this;
+    }
+
+    public void setTokenValue(Integer tokenValue) {
+        this.tokenValue = tokenValue;
+    }
+
     public Set<Investor> getInvestors() {
         return investors;
     }
@@ -81,11 +97,13 @@ public class RoundOfInvestment implements Serializable {
 
     public RoundOfInvestment addInvestor(Investor investor) {
         this.investors.add(investor);
+        investor.setRoundOfInvestment(this);
         return this;
     }
 
     public RoundOfInvestment removeInvestor(Investor investor) {
         this.investors.remove(investor);
+        investor.setRoundOfInvestment(null);
         return this;
     }
 
@@ -119,6 +137,7 @@ public class RoundOfInvestment implements Serializable {
             "id=" + getId() +
             ", endDate='" + getEndDate() + "'" +
             ", totalMoneyInvested='" + getTotalMoneyInvested() + "'" +
+            ", tokenValue='" + getTokenValue() + "'" +
             "}";
     }
 }
