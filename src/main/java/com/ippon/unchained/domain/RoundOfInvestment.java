@@ -97,13 +97,11 @@ public class RoundOfInvestment implements Serializable {
 
     public RoundOfInvestment addInvestor(Investor investor) {
         this.investors.add(investor);
-        investor.setRoundOfInvestment(this);
         return this;
     }
 
     public RoundOfInvestment removeInvestor(Investor investor) {
         this.investors.remove(investor);
-        investor.setRoundOfInvestment(null);
         return this;
     }
 

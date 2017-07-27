@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.web3j.abi.datatypes.Address;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -44,8 +45,8 @@ public class ExtendedUserResourceIntTest {
     private static final Integer DEFAULT_MONEY_INVESTED = 1;
     private static final Integer UPDATED_MONEY_INVESTED = 2;
 
-    private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
-    private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
+    private static final Address DEFAULT_ADDRESS = new Address("AAAAAAAAAA");
+    private static final Address UPDATED_ADDRESS = new Address("BBBBBBBBBB");
 
     @Autowired
     private ExtendedUserRepository extendedUserRepository;
