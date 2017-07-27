@@ -1,7 +1,7 @@
 package com.ippon.unchained.service.impl;
 
-import com.ippon.unchained.service.DividendsService;
-import com.ippon.unchained.service.solidity.Dividends;
+import com.ippon.unchained.service.DividendsContractService;
+import com.ippon.unchained.service.solidity.DividendsContract;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +23,9 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional
-public class DividendsServiceImpl implements DividendsService{
+public class DividendsContractServiceImpl implements DividendsContractService{
 
-    private static final Logger LOGGER = Logger.getLogger(DividendsServiceImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(DividendsContractServiceImpl.class);
 
     @Autowired
     Web3j web3j;
@@ -38,7 +38,7 @@ public class DividendsServiceImpl implements DividendsService{
     private String contractAddress;
 
 
-    public DividendsServiceImpl(){
+    public DividendsContractServiceImpl(){
 
         //Data is stored as private/public/balance
         accountData.add(new ArrayList(Arrays.asList("4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d", "0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1")));
@@ -96,10 +96,10 @@ public class DividendsServiceImpl implements DividendsService{
         LOGGER.info("Deploying Dividends");
 
         Credentials credentials = Credentials.create((String) accountData.get(0).get(0));
-        Dividends Dividends = null;
+        DividendsContract Dividends = null;
 
         try {
-            Dividends = Dividends.deploy(
+            DividendsContract = DividendsContract.deploy(
                 web3j,
                 credentials,
                 GAS_PRICE,
@@ -108,14 +108,14 @@ public class DividendsServiceImpl implements DividendsService{
                 MASTER_ADDRESS).get();
 
         } catch (InterruptedException e) {
-            LOGGER.error("Unable to deploy Dividends: " + e.getMessage());
+            LOGGER.error("Unable to deploy DividendsContract: " + e.getMessage());
             e.printStackTrace();
         } catch (ExecutionException e) {
-            LOGGER.error("Unable to deploy Dividends: " + e.getMessage());
+            LOGGER.error("Unable to deploy DividendsContract: " + e.getMessage());
             e.printStackTrace();
         }
 
-        contractAddress = Dividends.getContractAddress();
+        contractAddress = DividendsContract.getContractAddress();
 
     }
 
