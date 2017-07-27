@@ -34,7 +34,7 @@ public class RoundOfInvestment implements Serializable {
     @Column(name = "token_value")
     private Integer tokenValue;
 
-    @OneToMany(mappedBy = "roundOfInvestment")
+    @OneToMany
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Investor> investors = new HashSet<>();
