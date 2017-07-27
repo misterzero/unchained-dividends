@@ -29,7 +29,7 @@ public class ExtendedUser implements Serializable {
     private Integer moneyInvested;
 
     @Column(name = "address")
-    private Address address;    // TODO: Make sure the database supports data of type "Address" - originally set up as a string
+    private String address;    // TODO: Make sure the database supports data of type "Address" - originally set up as a string
 
     public Long getId() {
         return id;
@@ -65,16 +65,16 @@ public class ExtendedUser implements Serializable {
         this.moneyInvested = moneyInvested;
     }
 
-    public Address getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    public ExtendedUser address(Address address) {
+    public ExtendedUser address(String address) {
         this.address = address;
         return this;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
