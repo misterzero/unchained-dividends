@@ -8,7 +8,6 @@
             "entities": {
                 "main": "Entities",
                 "investor": "Investor",
-                "master": "Master",
                 "dividend": "Dividend",
                 "roundOfInvestment": "Round Of Investment",
                 "extendedUser": "Extended User",

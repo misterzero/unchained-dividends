@@ -1,7 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { UnchainedInvestorModule } from './investor/investor.module';
-import { UnchainedMasterModule } from './master/master.module';
 import { UnchainedDividendModule } from './dividend/dividend.module';
 import { UnchainedRoundOfInvestmentModule } from './round-of-investment/round-of-investment.module';
 import { UnchainedExtendedUserModule } from './extended-user/extended-user.module';
@@ -10,7 +9,6 @@ import { UnchainedExtendedUserModule } from './extended-user/extended-user.modul
 @NgModule({
     imports: [
         UnchainedInvestorModule,
-        UnchainedMasterModule,
         UnchainedDividendModule,
         UnchainedRoundOfInvestmentModule,
         UnchainedExtendedUserModule,

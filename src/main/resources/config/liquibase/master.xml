@@ -6,7 +6,6 @@
 
     <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170727144608_added_entity_Investor.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170727144836_added_entity_Master.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170727151357_added_entity_Dividend.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170727151830_added_entity_RoundOfInvestment.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170727174457_added_entity_ExtendedUser.xml" relativeToChangelogFile="false"/>
