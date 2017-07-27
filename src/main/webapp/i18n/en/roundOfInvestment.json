@@ -1,0 +1,23 @@
+{
+    "unchainedApp": {
+        "roundOfInvestment" : {
+            "home": {
+                "title": "Round Of Investments",
+                "createLabel": "Create a new Round Of Investment",
+                "createOrEditLabel": "Create or edit a Round Of Investment"
+            },
+            "created": "A new Round Of Investment is created with identifier {{ param }}",
+            "updated": "A Round Of Investment is updated with identifier {{ param }}",
+            "deleted": "A Round Of Investment is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Round Of Investment {{ id }}?"
+            },
+            "detail": {
+                "title": "Round Of Investment"
+            },
+            "endDate": "End Date",
+            "totalMoneyInvested": "Total Money Invested",
+            "investor": "Investor"
+        }
+    }
+}

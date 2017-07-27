@@ -1,0 +1,33 @@
+
+<div *ngIf="master">
+    <h2><span jhiTranslate="unchainedApp.master.detail.title">Master</span> {{master.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="unchainedApp.master.totalTokens">Total Tokens</span></dt>
+        <dd>
+            <span>{{master.totalTokens}}</span>
+        </dd>
+        <dt><span jhiTranslate="unchainedApp.master.dividendForOneToken">Dividend For One Token</span></dt>
+        <dd>
+            <span>{{master.dividendForOneToken}}</span>
+        </dd>
+        <dt><span jhiTranslate="unchainedApp.master.currentValueOfOneToken">Current Value Of One Token</span></dt>
+        <dd>
+            <span>{{master.currentValueOfOneToken}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'master/'+ master.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

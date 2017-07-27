@@ -1,0 +1,23 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "tokens",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "dividendsEarned",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "isInvestor",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20170727144608",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "investor",
+    "pagination": "no"
+}
