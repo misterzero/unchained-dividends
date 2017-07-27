@@ -62,11 +62,6 @@ public final class DividendsContract extends Contract {
         return executeCallSingleValueReturnAsync(function);
     }
 
-    public Future<TransactionReceipt> createMaster(Uint256 totalTokens, Uint256 totalMoneyInvested, Uint256 currentValueOfTheCompany) {
-        Function function = new Function("createMaster", Arrays.<Type>asList(totalTokens, totalMoneyInvested, currentValueOfTheCompany), Collections.<TypeReference<?>>emptyList());
-        return executeTransactionAsync(function);
-    }
-
     public Future<TransactionReceipt> distributeDividends(Uint256 dividends) {
         Function function = new Function("distributeDividends", Arrays.<Type>asList(dividends), Collections.<TypeReference<?>>emptyList());
         return executeTransactionAsync(function);

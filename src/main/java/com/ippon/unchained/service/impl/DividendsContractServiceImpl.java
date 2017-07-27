@@ -7,12 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.web3j.abi.datatypes.Address;
+import org.web3j.abi.datatypes.Bool;
+import org.web3j.abi.datatypes.Utf8String;
+import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthAccounts;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.protocol.core.methods.response.Web3ClientVersion;
+import org.web3j.abi.datatypes.Type;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -54,41 +59,6 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 
     }
 
-    @Override
-    public String getClientVersion() {
-
-        LOGGER.info("Obtaining Ethereum Client Version");
-
-        Web3ClientVersion web3ClientVersion = null;
-        try {
-            web3ClientVersion = web3j.web3ClientVersion().send();
-        } catch (IOException e) {
-            LOGGER.error("Failed to obtain client version: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return web3ClientVersion.getWeb3ClientVersion();
-
-    }
-
-    public List<List<Object>> getAccountData() {
-
-        LOGGER.info("Obtaining account data");
-
-        List<String> ethereumAccountIds = getAccounts();
-
-        for(int i = 0; i < ethereumAccountIds.size(); i++){
-
-            EthGetBalance balance = null;
-
-            balance = getAccountBalance(ethereumAccountIds.get(i));
-
-            accountData.get(i).add(balance.getBalance());
-
-        }
-
-        return accountData;
-    }
 
     @Override
     public void deployDividends(){
@@ -96,7 +66,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
         LOGGER.info("Deploying Dividends");
 
         Credentials credentials = Credentials.create((String) accountData.get(0).get(0));
-        DividendsContract Dividends = null;
+        DividendsContract DividendsContract = null;
 
         try {
             DividendsContract = DividendsContract.deploy(
@@ -123,73 +93,271 @@ public class DividendsContractServiceImpl implements DividendsContractService{
     public String getContractAddress() {
         return contractAddress;
     }
-
-    public Map<String, BigInteger> getAccountMap(){
-
-        LOGGER.info("Obtaining account map");
-
-        List<String> ethereumAccountIds = getAccounts();
-        Map<String, BigInteger> ethereumAccounts = new HashMap<>();
-        String accountId;
-        EthGetBalance balance = null;
-
-        for(int i = 0; i < ethereumAccountIds.size(); i++){
-
-            accountId = ethereumAccountIds.get(i);
-            balance = getAccountBalance(accountId);
-
-            ethereumAccounts.put(accountId, balance.getBalance());
-
-        }
-
-        return ethereumAccounts;
-
+    
+    public void init(DividendsContract contract,Address a1, Address a2, Address a3){
+    	System.out.println("Init function");
+    	try {
+			contract.init(a1,a2,a3).get();
+			System.out.println("end of the init function");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public Uint256 getMasterTotalTokens(DividendsContract contract){
+    	System.out.println("getMasterTotalToken function");
+    	try {
+			Uint256 val = contract.getMasterTotalTokens().get();
+			System.out.println("total tokens: "+val);
+			return val;
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
+    
+    public Uint256 getInvestorInvestment(DividendsContract contract,Address a){
+    	System.out.println("getInvestorInvestment function");
+    	try {
+    		Uint256 val = contract.getInvestorInvestment(a).get();
+    		System.out.println("investment: "+val);
+    		return val;
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
     }
 
-    @Override
-    public BigDecimal getBalanceDividends() throws ExecutionException, InterruptedException, IOException {
-        return null;
+    public void distributeDividends(DividendsContract contract,Uint256 dividends){
+    	System.out.println("distributeDividends function");
+    	try {
+    		contract.distributeDividends(dividends).get();
+    		System.out.println("dividends have been distributed.");
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public void masterRoundOfInvestment(DividendsContract contract, Uint256 currentValueOfTheCompany){
+    	System.out.println("masterRoundOfInvestment function");
+    	try{
+    		contract.masterRoundOfInvestment(currentValueOfTheCompany).get();
+    		System.out.println("end of the round of investment");
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public Uint256 getMasterValueOfOneToken(DividendsContract contract){
+    	System.out.println("getMasterValueOfOneToken function");
+    	try{
+    		Uint256 val = contract.getMasterValueOfOneToken().get();
+    		System.out.println("value of one token: "+val);
+    		return val;
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
+    
+    public Uint256 getInvestorTokens(DividendsContract contract, Address a){
+    	System.out.println("getInvestorTokens function");
+    	try{
+    		Uint256 val = contract.getInvestorTokens(a).get();
+    		System.out.println("tokens: "+val);
+    		return val;
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
+    
+    public List<Type> investors(DividendsContract contract, Address a){
+    	System.out.println("investors map");
+    	try{
+    		List<Type> i = contract.investors(a).get();
+    		System.out.println("list of all the investors");
+    		return i;
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
+    
+    public void newInvestor(DividendsContract contract, Address investorAddress, Uint256 moneyInvested){
+    	System.out.println("newInvestor funnction");
+    	try{
+    		contract.newInvestor(investorAddress, moneyInvested).get();
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public Uint256 getInvestorDividendsEarned(DividendsContract contract, Address a){
+    	System.out.println("getInvestorDividendsEarned");
+    	try{
+    		Uint256 val = contract.getInvestorsDividendsEarned(a).get();
+    		System.out.println("dividends earned: "+val); 
+    		return val;
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
+    
+    public void updateInvestorMoneyInvested(DividendsContract contract,Address investorAddress,Uint256 moneyInvested){
+    	System.out.println("updateInvestorMoneyInvested function");
+    	try{
+    		contract.updateInvestorMoneyInvested(investorAddress, moneyInvested).get();
+    		System.out.println("money invested: "+moneyInvested);
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
+    public Bool isInvestor(DividendsContract contract, Address investorsAddress){
+    	System.out.println("isInvestor function");
+    	try {
+    		Bool b = contract.isInvestor(investorsAddress).get();
+    		System.out.println("is investor response: "+b);
+    		return b;
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
+    
+    public Uint256 getInvestorsTotalMoneyInvested(DividendsContract contract, Address a){
+    	System.out.println("getInvestorTotalMoneyInvested function");
+    	try{
+	    	Uint256 val = contract.getInvestorsTotalMoneyInvested(a).get();
+	    	System.out.println("total money invested: "+val);
+	    	return val;
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
+    
+    public Address investorNumberI(DividendsContract contract, Uint256 i){
+    	System.out.println("investorNumberI function");
+    	try{
+    		Address a = contract.investorsList(i).get();
+    		System.out.println("address of the investor number "+i+": "+a);
+    		return a;
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
+    
+    public Uint256 getInvestorsCount(DividendsContract contract){
+    	System.out.println("getInvestorsCount function");
+    	try{
+    		Uint256 val = contract.getInvestorsCount().get();
+    		System.out.println("count of investors: "+val);
+    		return val;
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
     }
 
-    private List<String> getAccounts(){
 
-        LOGGER.info("Obtaining all account public keys");
+	@Override
+	public String getClientVersion() throws IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        List<String> ethereumAccountIds;
 
-        EthAccounts accounts = null;
-        try {
-            accounts = web3j.ethAccounts().sendAsync().get();
-        } catch (InterruptedException e) {
-            LOGGER.error("Unable to obtain accounts: " + e.getMessage());
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            LOGGER.error("Unable to obtain accounts: " + e.getMessage());
-            e.printStackTrace();
-        }
-        ethereumAccountIds = accounts.getAccounts();
+	@Override
+	public Map<String, BigInteger> getAccountMap() throws InterruptedException, ExecutionException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-        return ethereumAccountIds;
 
-    }
+	@Override
+	public List<List<Object>> getAccountData() throws ExecutionException, InterruptedException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    private EthGetBalance getAccountBalance(String accountId){
 
-        LOGGER.info("Obtaining account balance for [" + accountId +"]");
-
-        EthGetBalance balance = null;
-        try {
-            balance = web3j.ethGetBalance(accountId, DefaultBlockParameterName.LATEST).sendAsync().get();
-        } catch (InterruptedException e) {
-            LOGGER.error("Unable to retrieve balance for account  ["+ accountId + "]: " + e.getMessage() );
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            LOGGER.error("Unable to retrieve balance for account  ["+ accountId + "]: " + e.getMessage() );
-            e.printStackTrace();
-        }
-
-        return balance;
-
-    }
-
+	@Override
+	public BigDecimal getBalanceDividends() throws ExecutionException, InterruptedException, IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
