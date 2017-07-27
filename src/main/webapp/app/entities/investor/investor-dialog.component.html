@@ -27,6 +27,16 @@
             <input type="checkbox" class="form-control" name="isInvestor" id="field_isInvestor"
                 [(ngModel)]="investor.isInvestor"  />
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="unchainedApp.investor.moneyInvested" for="field_moneyInvested">Money Invested</label>
+            <input type="number" class="form-control" name="moneyInvested" id="field_moneyInvested"
+                [(ngModel)]="investor.moneyInvested"  />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="unchainedApp.investor.totalMoneyInvested" for="field_totalMoneyInvested">Total Money Invested</label>
+            <input type="number" class="form-control" name="totalMoneyInvested" id="field_totalMoneyInvested"
+                [(ngModel)]="investor.totalMoneyInvested"  />
+        </div>
 
     </div>
     <div class="modal-footer">

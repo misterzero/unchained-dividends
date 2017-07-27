@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "master")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Master extends ExtendedUser implements Serializable {
+public class Master implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,6 +29,9 @@ public class Master extends ExtendedUser implements Serializable {
 
     @Column(name = "current_value_of_one_token")
     private Integer currentValueOfOneToken;
+
+    @Column(name = "total_money_invested")
+    private Integer totalMoneyInvested;
 
     public Long getId() {
         return id;
@@ -77,6 +80,19 @@ public class Master extends ExtendedUser implements Serializable {
         this.currentValueOfOneToken = currentValueOfOneToken;
     }
 
+    public Integer getTotalMoneyInvested() {
+        return totalMoneyInvested;
+    }
+
+    public Master totalMoneyInvested(Integer totalMoneyInvested) {
+        this.totalMoneyInvested = totalMoneyInvested;
+        return this;
+    }
+
+    public void setTotalMoneyInvested(Integer totalMoneyInvested) {
+        this.totalMoneyInvested = totalMoneyInvested;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -104,6 +120,7 @@ public class Master extends ExtendedUser implements Serializable {
             ", totalTokens='" + getTotalTokens() + "'" +
             ", dividendForOneToken='" + getDividendForOneToken() + "'" +
             ", currentValueOfOneToken='" + getCurrentValueOfOneToken() + "'" +
+            ", totalMoneyInvested='" + getTotalMoneyInvested() + "'" +
             "}";
     }
 }

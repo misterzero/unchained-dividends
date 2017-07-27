@@ -96,7 +96,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
         LOGGER.info("Deploying Dividends");
 
         Credentials credentials = Credentials.create((String) accountData.get(0).get(0));
-        DividendsContract Dividends = null;
+        DividendsContract DividendsContract = null;
 
         try {
             DividendsContract = DividendsContract.deploy(

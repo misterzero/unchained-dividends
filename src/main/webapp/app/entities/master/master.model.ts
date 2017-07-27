@@ -4,6 +4,7 @@ export class Master {
         public totalTokens?: number,
         public dividendForOneToken?: number,
         public currentValueOfOneToken?: number,
+        public totalMoneyInvested?: number,
     ) {
     }
 }

@@ -4,6 +4,8 @@ export class Investor {
         public tokens?: number,
         public dividendsEarned?: number,
         public isInvestor?: boolean,
+        public moneyInvested?: number,
+        public totalMoneyInvested?: number,
     ) {
         this.isInvestor = false;
     }

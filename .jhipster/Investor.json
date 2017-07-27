@@ -13,6 +13,14 @@
         {
             "fieldName": "isInvestor",
             "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "moneyInvested",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "totalMoneyInvested",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20170727144608",

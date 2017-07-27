@@ -45,6 +45,7 @@ public class CacheConfiguration {
             cm.createCache(com.ippon.unchained.domain.Dividend.class.getName(), jcacheConfiguration);
             cm.createCache(com.ippon.unchained.domain.RoundOfInvestment.class.getName(), jcacheConfiguration);
             cm.createCache(com.ippon.unchained.domain.RoundOfInvestment.class.getName() + ".investors", jcacheConfiguration);
+            cm.createCache(com.ippon.unchained.domain.ExtendedUser.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

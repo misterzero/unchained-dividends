@@ -47,6 +47,9 @@ public class MasterResourceIntTest {
     private static final Integer DEFAULT_CURRENT_VALUE_OF_ONE_TOKEN = 1;
     private static final Integer UPDATED_CURRENT_VALUE_OF_ONE_TOKEN = 2;
 
+    private static final Integer DEFAULT_TOTAL_MONEY_INVESTED = 1;
+    private static final Integer UPDATED_TOTAL_MONEY_INVESTED = 2;
+
     @Autowired
     private MasterRepository masterRepository;
 
@@ -89,7 +92,8 @@ public class MasterResourceIntTest {
         Master master = new Master()
             .totalTokens(DEFAULT_TOTAL_TOKENS)
             .dividendForOneToken(DEFAULT_DIVIDEND_FOR_ONE_TOKEN)
-            .currentValueOfOneToken(DEFAULT_CURRENT_VALUE_OF_ONE_TOKEN);
+            .currentValueOfOneToken(DEFAULT_CURRENT_VALUE_OF_ONE_TOKEN)
+            .totalMoneyInvested(DEFAULT_TOTAL_MONEY_INVESTED);
         return master;
     }
 
@@ -116,6 +120,7 @@ public class MasterResourceIntTest {
         assertThat(testMaster.getTotalTokens()).isEqualTo(DEFAULT_TOTAL_TOKENS);
         assertThat(testMaster.getDividendForOneToken()).isEqualTo(DEFAULT_DIVIDEND_FOR_ONE_TOKEN);
         assertThat(testMaster.getCurrentValueOfOneToken()).isEqualTo(DEFAULT_CURRENT_VALUE_OF_ONE_TOKEN);
+        assertThat(testMaster.getTotalMoneyInvested()).isEqualTo(DEFAULT_TOTAL_MONEY_INVESTED);
     }
 
     @Test
@@ -150,7 +155,8 @@ public class MasterResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(master.getId().intValue())))
             .andExpect(jsonPath("$.[*].totalTokens").value(hasItem(DEFAULT_TOTAL_TOKENS)))
             .andExpect(jsonPath("$.[*].dividendForOneToken").value(hasItem(DEFAULT_DIVIDEND_FOR_ONE_TOKEN)))
-            .andExpect(jsonPath("$.[*].currentValueOfOneToken").value(hasItem(DEFAULT_CURRENT_VALUE_OF_ONE_TOKEN)));
+            .andExpect(jsonPath("$.[*].currentValueOfOneToken").value(hasItem(DEFAULT_CURRENT_VALUE_OF_ONE_TOKEN)))
+            .andExpect(jsonPath("$.[*].totalMoneyInvested").value(hasItem(DEFAULT_TOTAL_MONEY_INVESTED)));
     }
 
     @Test
@@ -166,7 +172,8 @@ public class MasterResourceIntTest {
             .andExpect(jsonPath("$.id").value(master.getId().intValue()))
             .andExpect(jsonPath("$.totalTokens").value(DEFAULT_TOTAL_TOKENS))
             .andExpect(jsonPath("$.dividendForOneToken").value(DEFAULT_DIVIDEND_FOR_ONE_TOKEN))
-            .andExpect(jsonPath("$.currentValueOfOneToken").value(DEFAULT_CURRENT_VALUE_OF_ONE_TOKEN));
+            .andExpect(jsonPath("$.currentValueOfOneToken").value(DEFAULT_CURRENT_VALUE_OF_ONE_TOKEN))
+            .andExpect(jsonPath("$.totalMoneyInvested").value(DEFAULT_TOTAL_MONEY_INVESTED));
     }
 
     @Test
@@ -190,7 +197,8 @@ public class MasterResourceIntTest {
         updatedMaster
             .totalTokens(UPDATED_TOTAL_TOKENS)
             .dividendForOneToken(UPDATED_DIVIDEND_FOR_ONE_TOKEN)
-            .currentValueOfOneToken(UPDATED_CURRENT_VALUE_OF_ONE_TOKEN);
+            .currentValueOfOneToken(UPDATED_CURRENT_VALUE_OF_ONE_TOKEN)
+            .totalMoneyInvested(UPDATED_TOTAL_MONEY_INVESTED);
 
         restMasterMockMvc.perform(put("/api/masters")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -204,6 +212,7 @@ public class MasterResourceIntTest {
         assertThat(testMaster.getTotalTokens()).isEqualTo(UPDATED_TOTAL_TOKENS);
         assertThat(testMaster.getDividendForOneToken()).isEqualTo(UPDATED_DIVIDEND_FOR_ONE_TOKEN);
         assertThat(testMaster.getCurrentValueOfOneToken()).isEqualTo(UPDATED_CURRENT_VALUE_OF_ONE_TOKEN);
+        assertThat(testMaster.getTotalMoneyInvested()).isEqualTo(UPDATED_TOTAL_MONEY_INVESTED);
     }
 
     @Test

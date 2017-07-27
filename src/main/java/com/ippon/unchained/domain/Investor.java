@@ -8,12 +8,12 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A Investor.
+ * An Investor.
  */
 @Entity
 @Table(name = "investor")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Investor extends ExtendedUser implements Serializable {
+public class Investor implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,6 +29,12 @@ public class Investor extends ExtendedUser implements Serializable {
 
     @Column(name = "is_investor")
     private Boolean isInvestor;
+
+    @Column(name = "money_invested")
+    private Integer moneyInvested;
+
+    @Column(name = "total_money_invested")
+    private Integer totalMoneyInvested;
 
     public Long getId() {
         return id;
@@ -77,6 +83,32 @@ public class Investor extends ExtendedUser implements Serializable {
         this.isInvestor = isInvestor;
     }
 
+    public Integer getMoneyInvested() {
+        return moneyInvested;
+    }
+
+    public Investor moneyInvested(Integer moneyInvested) {
+        this.moneyInvested = moneyInvested;
+        return this;
+    }
+
+    public void setMoneyInvested(Integer moneyInvested) {
+        this.moneyInvested = moneyInvested;
+    }
+
+    public Integer getTotalMoneyInvested() {
+        return totalMoneyInvested;
+    }
+
+    public Investor totalMoneyInvested(Integer totalMoneyInvested) {
+        this.totalMoneyInvested = totalMoneyInvested;
+        return this;
+    }
+
+    public void setTotalMoneyInvested(Integer totalMoneyInvested) {
+        this.totalMoneyInvested = totalMoneyInvested;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -104,6 +136,8 @@ public class Investor extends ExtendedUser implements Serializable {
             ", tokens='" + getTokens() + "'" +
             ", dividendsEarned='" + getDividendsEarned() + "'" +
             ", isInvestor='" + isIsInvestor() + "'" +
+            ", moneyInvested='" + getMoneyInvested() + "'" +
+            ", totalMoneyInvested='" + getTotalMoneyInvested() + "'" +
             "}";
     }
 }

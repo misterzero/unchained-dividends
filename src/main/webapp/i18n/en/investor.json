@@ -17,7 +17,9 @@
             },
             "tokens": "Tokens",
             "dividendsEarned": "Dividends Earned",
-            "isInvestor": "Is Investor"
+            "isInvestor": "Is Investor",
+            "moneyInvested": "Money Invested",
+            "totalMoneyInvested": "Total Money Invested"
         }
     }
 }

@@ -11,6 +11,7 @@
                 "master": "Master",
                 "dividend": "Dividend",
                 "roundOfInvestment": "Round Of Investment",
+                "extendedUser": "Extended User",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

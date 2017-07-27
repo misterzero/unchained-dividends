@@ -17,7 +17,8 @@
             },
             "totalTokens": "Total Tokens",
             "dividendForOneToken": "Dividend For One Token",
-            "currentValueOfOneToken": "Current Value Of One Token"
+            "currentValueOfOneToken": "Current Value Of One Token",
+            "totalMoneyInvested": "Total Money Invested"
         }
     }
 }
