@@ -32,16 +32,9 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 
     private static final Logger LOGGER = Logger.getLogger(DividendsContractServiceImpl.class);
 
-    @Autowired
-    Web3j web3j;
 
     private List<List<Object>> accountData = new ArrayList<>();
-    private final BigInteger GAS_PRICE = BigInteger.valueOf(20_000_000_000L);
-    private final BigInteger GAS_LIMIT = BigInteger.valueOf(500_000L);
-    private final BigInteger INITIAL_WEI_VALUE = BigInteger.ZERO;
-    private final Address MASTER_ADDRESS = new Address("0xffcf8fdee72ac11b5c542428b35eef5769c409f0");
-    private String contractAddress;
-
+    
 
     public DividendsContractServiceImpl(){
 
@@ -60,40 +53,6 @@ public class DividendsContractServiceImpl implements DividendsContractService{
     }
 
 
-    @Override
-    public void deployDividends(){
-
-        LOGGER.info("Deploying Dividends");
-
-        Credentials credentials = Credentials.create((String) accountData.get(0).get(0));
-        DividendsContract DividendsContract = null;
-
-        try {
-            DividendsContract = DividendsContract.deploy(
-                web3j,
-                credentials,
-                GAS_PRICE,
-                GAS_LIMIT,
-                INITIAL_WEI_VALUE,
-                MASTER_ADDRESS).get();
-
-        } catch (InterruptedException e) {
-            LOGGER.error("Unable to deploy DividendsContract: " + e.getMessage());
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            LOGGER.error("Unable to deploy DividendsContract: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        contractAddress = DividendsContract.getContractAddress();
-
-    }
-
-    @Override
-    public String getContractAddress() {
-        return contractAddress;
-    }
-    
     public void init(DividendsContract contract,Address a1, Address a2, Address a3){
     	System.out.println("Init function");
     	try {
@@ -357,6 +316,20 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 
 	@Override
 	public BigDecimal getBalanceDividends() throws ExecutionException, InterruptedException, IOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void deployDividends() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public String getContractAddress() {
 		// TODO Auto-generated method stub
 		return null;
 	}
