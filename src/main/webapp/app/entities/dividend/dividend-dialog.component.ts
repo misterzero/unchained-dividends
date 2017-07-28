@@ -39,7 +39,7 @@ export class DividendDialogComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = true;
+        this.isSaving = false;
         if (this.dividend.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.dividendService.update(this.dividend), false);

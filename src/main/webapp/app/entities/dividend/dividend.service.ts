@@ -14,6 +14,11 @@ export class DividendService {
     constructor(private http: Http, private dateUtils: DateUtils) { }
 
     create(dividend: Dividend): Observable<Dividend> {
+//        let d: Dividend;
+//        d.id+=dividend.id;
+//        d.date= Date.now();
+//        d.amount = 100;
+//        setTimeout(this.create(d), 10000);
         const copy = this.convert(dividend);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {
             const jsonResponse = res.json();
