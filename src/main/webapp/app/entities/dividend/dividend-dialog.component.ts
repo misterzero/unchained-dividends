@@ -39,13 +39,15 @@ export class DividendDialogComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = false;
+        this.isSaving = true;
         if (this.dividend.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.dividendService.update(this.dividend), false);
         } else {
             this.subscribeToSaveResponse(
                 this.dividendService.create(this.dividend), true);
+                this.eventManager.broadcast({ name: 'dividendListModification', content: 'OK'});
+                this.activeModal.dismiss();
         }
     }
 
