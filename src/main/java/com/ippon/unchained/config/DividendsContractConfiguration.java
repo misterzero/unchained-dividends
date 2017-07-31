@@ -28,7 +28,7 @@ public class DividendsContractConfiguration {
     private final BigInteger INITIAL_WEI_VALUE = BigInteger.ZERO;
     private final Address MASTER_ADDRESS = new Address("0xffcf8fdee72ac11b5c542428b35eef5769c409f0");
 
-	public void deployDividends(){
+	public DividendsContract  deployDividends(){
         LOGGER.info("Deploying Dividends");
 
         Credentials credentials = Credentials.create((String) "4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d");
@@ -42,25 +42,23 @@ public class DividendsContractConfiguration {
                 GAS_LIMIT,
                 INITIAL_WEI_VALUE,
                 MASTER_ADDRESS).get();
+            return DividendsContract;
 
         } catch (InterruptedException e) {
             LOGGER.error("Unable to deploy DividendsContract: " + e.getMessage());
             e.printStackTrace();
+            return null;
         } catch (ExecutionException e) {
             LOGGER.error("Unable to deploy DividendsContract: " + e.getMessage());
             e.printStackTrace();
+            return null;
         }
     }
 	
 	@Bean 	
 	@Scope(value = "singleton")
 	public DividendsContract getContract(){
-		deployDividends();
-		DividendsContract contract = DividendsContract.load("0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1",
-	           web3j,
-	           Credentials.create("0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1"),
-	           DividendsContract.GAS_PRICE,
-	           DividendsContract.GAS_LIMIT);
+		DividendsContract contract = deployDividends();
 		return contract;
 	}
 	
