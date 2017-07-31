@@ -62,17 +62,14 @@ public class RoundOfInvestmentResource {
     @Async
     public void executeRoundOfInvestment(LocalDate d){
     	LocalDate today = LocalDate.now();
-    	log.info(d.toString()+"   "+ today.atStartOfDay());
     	Timestamp timestamp1 = Timestamp.valueOf(today.atStartOfDay());
-    	log.info("tmst1: "+timestamp1.toString());
     	Timestamp timestamp2 = Timestamp.valueOf(d.atStartOfDay());
-    	log.info("tmst2: "+timestamp2.toString());
     	long d1 = timestamp1.getTime();
     	long d2 = timestamp2.getTime();
     	long n = d2-d1;
     	log.info("time remaining before execution of the script on the chaincode: "+n);
     	try {
-			Thread.sleep(20000);
+			Thread.sleep(n);
 			double valueOfTheCompany = DummyClass.getValueOfTheCompany();
 			int val = DummyClass.getValueOfOneToken(valueOfTheCompany);
 			log.info("round of investment executed with the value of the company: " +valueOfTheCompany);
@@ -80,7 +77,6 @@ public class RoundOfInvestmentResource {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
     }
 
     /**
