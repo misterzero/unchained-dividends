@@ -2,17 +2,21 @@ package com.ippon.unchained.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.ippon.unchained.domain.RoundOfInvestment;
+import com.ippon.unchained.service.DummyClass;
 import com.ippon.unchained.service.RoundOfInvestmentService;
 import com.ippon.unchained.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,9 +52,35 @@ public class RoundOfInvestmentResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new roundOfInvestment cannot already have an ID")).body(null);
         }
         RoundOfInvestment result = roundOfInvestmentService.save(roundOfInvestment);
-        return ResponseEntity.created(new URI("/api/round-of-investments/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        ResponseEntity<RoundOfInvestment> res = ResponseEntity.created(new URI("/api/round-of-investments/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        executeRoundOfInvestment(roundOfInvestment.getEndDate());
+        return res;
+    }
+    
+    @Async
+    public void executeRoundOfInvestment(LocalDate d){
+    	LocalDate today = LocalDate.now();
+    	log.info(d.toString()+"   "+ today.atStartOfDay());
+    	Timestamp timestamp1 = Timestamp.valueOf(today.atStartOfDay());
+    	log.info("tmst1: "+timestamp1.toString());
+    	Timestamp timestamp2 = Timestamp.valueOf(d.atStartOfDay());
+    	log.info("tmst2: "+timestamp2.toString());
+    	long d1 = timestamp1.getTime();
+    	long d2 = timestamp2.getTime();
+    	long n = d2-d1;
+    	log.info("time remaining before execution of the script on the chaincode: "+n);
+    	try {
+			Thread.sleep(20000);
+			double valueOfTheCompany = DummyClass.getValueOfTheCompany();
+			int val = DummyClass.getValueOfOneToken(valueOfTheCompany);
+			log.info("round of investment executed with the value of the company: " +valueOfTheCompany);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
     }
 
     /**

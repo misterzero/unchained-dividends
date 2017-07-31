@@ -17,7 +17,7 @@ public class DummyClass {
 		valueOfTheCompany.put(1, 100);
 		valueOfTheCompany.put(2, 1000);
 		valueOfTheCompany.put(3, 10000);
-		valueOfTheCompany.put(3, 100000);
+		valueOfTheCompany.put(4, 100000);
 	}
 	
 	public static double getDividendsAmount(){
@@ -44,5 +44,9 @@ public class DummyClass {
 			return valueOfTheCompany.get(3);
 		else
 			return valueOfTheCompany.get(4);
+	}
+	
+	public static int getValueOfOneToken(double val){
+		return (int) (val/200);
 	}
 }
