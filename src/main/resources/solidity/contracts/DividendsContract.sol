@@ -96,17 +96,27 @@ contract DividendsContract  {
         master[masterAddress].currentValueOfOneToken = currentValueOfTheCompany/master[masterAddress].totalTokens;
         return true;
     }
-
+    
+	function updateMasterTotalMoneyInvested(uint moneyToAdd) public returns(bool success){
+        master[masterAddress].totalMoneyInvested+=moneyToAdd;
+        return true;
+    }
+    
     function giveTokens() public returns(bool success){
         uint totalTokensAdded = 0;
+        uint totalInvestmentToAddToMaster = 0;
         for(uint k=0;k<investorsList.length;k++){
             address a = investorsList[k];
             uint moneyInvestedByCurrentInvestor = investors[a].moneyInvested;
-            uint numberOfTokensToAdd = moneyInvestedByCurrentInvestor/master[masterAddress].currentValueOfOneToken;
-            updateInvestorTokens(a,numberOfTokensToAdd);
-            totalTokensAdded+= numberOfTokensToAdd;
+            if(moneyInvestedByCurrentInvestor>0){
+                uint numberOfTokensToAdd = moneyInvestedByCurrentInvestor/master[masterAddress].currentValueOfOneToken;
+                updateInvestorTokens(a,numberOfTokensToAdd);
+                totalInvestmentToAddToMaster+=moneyInvestedByCurrentInvestor;
+                totalTokensAdded+= numberOfTokensToAdd;
+            }
         }
         updateMasterTotalTokens(totalTokensAdded);
+        updateMasterTotalMoneyInvested(totalInvestmentToAddToMaster);
         return true;
     }
 
@@ -148,5 +158,9 @@ contract DividendsContract  {
 
     function getInvestorsTotalMoneyInvested(address a) constant returns(uint totalMoneyInvested){
         return investors[a].totalMoneyInvested;
+    }
+    
+    function getMasterTotalMoneyInvested() constant returns(uint total){
+        return master[masterAddress].totalMoneyInvested;
     }
 }
