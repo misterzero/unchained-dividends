@@ -66,13 +66,13 @@ public class RoundOfInvestmentResource {
         ResponseEntity<RoundOfInvestment> res = ResponseEntity.created(new URI("/api/round-of-investments/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
                 .body(result);
-        executeRoundOfInvestment(result.getId(),roundOfInvestment.getEndDate());
+        executeRoundOfInvestment(roundOfInvestment,roundOfInvestment.getEndDate());
 
         return res;
     }
 
     @Async
-    public void executeRoundOfInvestment(Long id,LocalDate d){
+    public void executeRoundOfInvestment(RoundOfInvestment r,LocalDate d){
     	LocalDate today = LocalDate.now();
     	Timestamp timestamp1 = Timestamp.valueOf(today.atStartOfDay());
     	Timestamp timestamp2 = Timestamp.valueOf(d.atStartOfDay());
@@ -87,11 +87,9 @@ public class RoundOfInvestmentResource {
 			DividendsContract contract= dividendsContractConfiguration.getContract();
 			dividendsContractService.masterRoundOfInvestment(contract, currentValueOfTheCompany);
 			log.info("round of investment executed with the value of the company: " +valueOfTheCompany);
-	        RoundOfInvestment r = new RoundOfInvestment();
-	        r.setId(id);
 	        r.setTokenValue(dividendsContractService.getMasterValueOfOneToken(contract).getValue().intValue());
-	       // updateRoundOfInvestment(r);
-		} catch (InterruptedException  e) {
+	        updateRoundOfInvestment(r);
+		} catch (InterruptedException | URISyntaxException  e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
