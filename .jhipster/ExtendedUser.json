@@ -7,10 +7,6 @@
             "fieldType": "Long"
         },
         {
-            "fieldName": "moneyInvested",
-            "fieldType": "Integer"
-        },
-        {
             "fieldName": "address",
             "fieldType": "String"
         }

@@ -2,14 +2,13 @@ package com.ippon.unchained.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.web3j.abi.datatypes.Address;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * An ExtendedUser.
+ * A ExtendedUser.
  */
 @Entity
 @Table(name = "extended_user")
@@ -25,11 +24,8 @@ public class ExtendedUser implements Serializable {
     @Column(name = "account_id")
     private Long accountId;
 
-    @Column(name = "money_invested")
-    private Integer moneyInvested;
-
     @Column(name = "address")
-    private String address;    // TODO: Make sure the database supports data of type "Address" - originally set up as a string
+    private String address;
 
     public Long getId() {
         return id;
@@ -50,19 +46,6 @@ public class ExtendedUser implements Serializable {
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
-    }
-
-    public Integer getMoneyInvested() {
-        return moneyInvested;
-    }
-
-    public ExtendedUser moneyInvested(Integer moneyInvested) {
-        this.moneyInvested = moneyInvested;
-        return this;
-    }
-
-    public void setMoneyInvested(Integer moneyInvested) {
-        this.moneyInvested = moneyInvested;
     }
 
     public String getAddress() {
@@ -103,7 +86,6 @@ public class ExtendedUser implements Serializable {
         return "ExtendedUser{" +
             "id=" + getId() +
             ", accountId='" + getAccountId() + "'" +
-            ", moneyInvested='" + getMoneyInvested() + "'" +
             ", address='" + getAddress() + "'" +
             "}";
     }

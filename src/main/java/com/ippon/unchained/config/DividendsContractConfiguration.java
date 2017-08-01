@@ -8,8 +8,10 @@ import java.util.concurrent.ExecutionException;
 import javax.annotation.PostConstruct;
 
 import com.ippon.unchained.domain.ExtendedUser;
+import com.ippon.unchained.domain.Investor;
 import com.ippon.unchained.domain.User;
 import com.ippon.unchained.service.ExtendedUserService;
+import com.ippon.unchained.service.InvestorService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,14 +45,20 @@ public class DividendsContractConfiguration {
     @Autowired
     public ExtendedUserService extendedUserService;
 
+    @Autowired
+    public InvestorService investorService;
+
 	public DividendsContract  deployDividends(){
         LOGGER.info("Deploying Dividends");
 
         Credentials credentials = Credentials.create((String) "4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d");
         // Creating three investor users
         extendedUserService.save(new ExtendedUser().accountId(5L).address("0x22d491bde2303f2f43325b2108d26f1eaba1e32b"));
+        investorService.save(new Investor().accountId(5L));
         extendedUserService.save(new ExtendedUser().accountId(6L).address("0xe11ba2b4d45eaed5996cd0823791e0c93114882d"));
+        investorService.save(new Investor().accountId(6L));
         extendedUserService.save(new ExtendedUser().accountId(7L).address("0xd03ea8624c8c5987235048901fb614fdca89b117"));
+        investorService.save(new Investor().accountId(7L));
 
         DividendsContract DividendsContract = null;
 
