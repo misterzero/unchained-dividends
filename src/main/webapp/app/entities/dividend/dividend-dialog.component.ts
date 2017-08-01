@@ -45,12 +45,15 @@ export class DividendDialogComponent implements OnInit {
                 this.dividendService.update(this.dividend), false);
         } else {
             this.subscribeToSaveResponse(
-                this.dividendService.create(this.dividend), true);
-                this.eventManager.broadcast({ name: 'dividendListModification', content: 'OK'});
-                this.activeModal.dismiss();
+            this.dividendService.create(this.dividend), true);
+            setTimeout(this.display(), 2000);
         }
     }
 
+    private display() {
+      this.eventManager.broadcast({ name: 'dividendListModification', content: 'OK'});
+      this.activeModal.dismiss();
+    }
     private subscribeToSaveResponse(result: Observable<Dividend>, isCreated: boolean) {
         result.subscribe((res: Dividend) =>
             this.onSaveSuccess(res, isCreated), (res: Response) => this.onSaveError(res));

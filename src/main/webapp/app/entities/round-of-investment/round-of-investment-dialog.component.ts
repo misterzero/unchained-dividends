@@ -45,8 +45,14 @@ export class RoundOfInvestmentDialogComponent implements OnInit {
                 this.roundOfInvestmentService.update(this.roundOfInvestment), false);
         } else {
             this.subscribeToSaveResponse(
-                this.roundOfInvestmentService.create(this.roundOfInvestment), true);
+            this.roundOfInvestmentService.create(this.roundOfInvestment), true);
+            setTimeout(this.display(), 2000);
         }
+    }
+
+    private display() {
+      this.eventManager.broadcast({ name: 'roundOfInvestmentListModification', content: 'OK'});
+      this.activeModal.dismiss();
     }
 
     private subscribeToSaveResponse(result: Observable<RoundOfInvestment>, isCreated: boolean) {
