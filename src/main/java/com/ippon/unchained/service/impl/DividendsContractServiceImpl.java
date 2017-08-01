@@ -333,4 +333,5 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

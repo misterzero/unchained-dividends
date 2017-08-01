@@ -1,15 +1,20 @@
 package com.ippon.unchained.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.ippon.unchained.config.DividendsContractConfiguration;
 import com.ippon.unchained.domain.Dividend;
 import com.ippon.unchained.service.DividendService;
+import com.ippon.unchained.service.DividendsContractService;
 import com.ippon.unchained.service.DummyClass;
+import com.ippon.unchained.service.solidity.DividendsContract;
 import com.ippon.unchained.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.web3j.abi.datatypes.generated.Uint256;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,6 +34,12 @@ public class DividendResource {
     private static final String ENTITY_NAME = "dividend";
 
     private final DividendService dividendService;
+    
+    @Autowired
+    private DividendsContractService dividendsContractService;
+   
+    @Autowired
+    private DividendsContractConfiguration dividendsContractConfiguration;
 
     public DividendResource(DividendService dividendService) {
         this.dividendService = dividendService;
@@ -54,10 +65,19 @@ public class DividendResource {
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
         Dividend d = new Dividend();
-        d.setAmount(DummyClass.getDividendsAmount());
+        double amount = DummyClass.getDividendsAmount();
+        d.setAmount(amount);
         d.setDate(LocalDate.now());
+        executeDistributeDividends(amount);
         Thread.sleep(4000);
         return createDividend(d);
+    }
+    
+    public void executeDistributeDividends(double dividendsAmount){
+    	log.info("distribution of dividends in the chaincode begins");
+    	Uint256 amount = new Uint256((long)dividendsAmount);
+		DividendsContract contract= dividendsContractConfiguration.getContract();
+		dividendsContractService.distributeDividends(contract, amount);
     }
 
     /**

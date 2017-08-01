@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +16,7 @@ import org.web3j.abi.datatypes.Address;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 
+import com.ippon.unchained.service.DividendsContractService;
 import com.ippon.unchained.service.impl.DividendsContractServiceImpl;
 import com.ippon.unchained.service.solidity.DividendsContract;
 
@@ -27,6 +30,12 @@ public class DividendsContractConfiguration {
     private final BigInteger GAS_LIMIT = BigInteger.valueOf(4_300_000L);
     private final BigInteger INITIAL_WEI_VALUE = BigInteger.ZERO;
     private final Address MASTER_ADDRESS = new Address("0xffcf8fdee72ac11b5c542428b35eef5769c409f0");
+    private static final Address ADDRESS1 = new Address("0x22d491bde2303f2f43325b2108d26f1eaba1e32b");     
+    private static final Address ADDRESS2 = new Address("0xe11ba2b4d45eaed5996cd0823791e0c93114882d");     
+    private static final Address ADDRESS3 = new Address("0xd03ea8624c8c5987235048901fb614fdca89b117");
+    
+    @Autowired
+    public DividendsContractService dividendsContractService;
 
 	public DividendsContract  deployDividends(){
         LOGGER.info("Deploying Dividends");
@@ -59,6 +68,7 @@ public class DividendsContractConfiguration {
 	@Scope(value = "singleton")
 	public DividendsContract getContract(){
 		DividendsContract contract = deployDividends();
+		dividendsContractService.init(contract,ADDRESS1,ADDRESS2,ADDRESS3);
 		return contract;
 	}
 	

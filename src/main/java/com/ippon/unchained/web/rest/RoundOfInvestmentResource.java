@@ -1,16 +1,21 @@
 package com.ippon.unchained.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.ippon.unchained.config.DividendsContractConfiguration;
 import com.ippon.unchained.domain.RoundOfInvestment;
+import com.ippon.unchained.service.DividendsContractService;
 import com.ippon.unchained.service.DummyClass;
 import com.ippon.unchained.service.RoundOfInvestmentService;
+import com.ippon.unchained.service.solidity.DividendsContract;
 import com.ippon.unchained.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
+import org.web3j.abi.datatypes.generated.Uint256;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -32,6 +37,12 @@ public class RoundOfInvestmentResource {
     private static final String ENTITY_NAME = "roundOfInvestment";
 
     private final RoundOfInvestmentService roundOfInvestmentService;
+    
+    @Autowired
+    private DividendsContractService dividendsContractService;
+   
+    @Autowired
+    private DividendsContractConfiguration dividendsContractConfiguration;
 
     public RoundOfInvestmentResource(RoundOfInvestmentService roundOfInvestmentService) {
         this.roundOfInvestmentService = roundOfInvestmentService;
@@ -55,12 +66,13 @@ public class RoundOfInvestmentResource {
         ResponseEntity<RoundOfInvestment> res = ResponseEntity.created(new URI("/api/round-of-investments/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
                 .body(result);
-        executeRoundOfInvestment(roundOfInvestment.getEndDate());
+        executeRoundOfInvestment(result.getId(),roundOfInvestment.getEndDate());
+        
         return res;
     }
     
     @Async
-    public void executeRoundOfInvestment(LocalDate d){
+    public void executeRoundOfInvestment(Long id,LocalDate d){
     	LocalDate today = LocalDate.now();
     	Timestamp timestamp1 = Timestamp.valueOf(today.atStartOfDay());
     	Timestamp timestamp2 = Timestamp.valueOf(d.atStartOfDay());
@@ -69,11 +81,18 @@ public class RoundOfInvestmentResource {
     	long n = d2-d1;
     	log.info("time remaining before execution of the script on the chaincode: "+n);
     	try {
-			Thread.sleep(n);
+			Thread.sleep(10000);
 			double valueOfTheCompany = DummyClass.getValueOfTheCompany();
-			int val = DummyClass.getValueOfOneToken(valueOfTheCompany);
+			Uint256 currentValueOfTheCompany =new Uint256((long)(valueOfTheCompany*1000000));
+			DividendsContract contract= dividendsContractConfiguration.getContract();
+			dividendsContractService.masterRoundOfInvestment(contract, currentValueOfTheCompany);
 			log.info("round of investment executed with the value of the company: " +valueOfTheCompany);
-		} catch (InterruptedException e) {
+	        RoundOfInvestment r = new RoundOfInvestment();
+	        r.setId(id);
+	        r.setTokenValue(dividendsContractService.getMasterValueOfOneToken(contract).getValue().intValue());
+	        r.setInvestors(null);
+	       // updateRoundOfInvestment(r);
+		} catch (InterruptedException  e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
