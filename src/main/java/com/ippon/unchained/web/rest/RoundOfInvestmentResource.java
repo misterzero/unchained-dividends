@@ -37,10 +37,10 @@ public class RoundOfInvestmentResource {
     private static final String ENTITY_NAME = "roundOfInvestment";
 
     private final RoundOfInvestmentService roundOfInvestmentService;
-    
+
     @Autowired
     private DividendsContractService dividendsContractService;
-   
+
     @Autowired
     private DividendsContractConfiguration dividendsContractConfiguration;
 
@@ -67,10 +67,10 @@ public class RoundOfInvestmentResource {
                 .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
                 .body(result);
         executeRoundOfInvestment(result.getId(),roundOfInvestment.getEndDate());
-        
+
         return res;
     }
-    
+
     @Async
     public void executeRoundOfInvestment(Long id,LocalDate d){
     	LocalDate today = LocalDate.now();
@@ -90,7 +90,6 @@ public class RoundOfInvestmentResource {
 	        RoundOfInvestment r = new RoundOfInvestment();
 	        r.setId(id);
 	        r.setTokenValue(dividendsContractService.getMasterValueOfOneToken(contract).getValue().intValue());
-	        r.setInvestors(null);
 	       // updateRoundOfInvestment(r);
 		} catch (InterruptedException  e) {
 			// TODO Auto-generated catch block

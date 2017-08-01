@@ -1,13 +1,6 @@
 {
     "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipName": "investor",
-            "otherEntityName": "investor",
-            "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "roundOfInvestment"
-        }
-    ],
+    "relationships": [],
     "fields": [
         {
             "fieldName": "endDate",
