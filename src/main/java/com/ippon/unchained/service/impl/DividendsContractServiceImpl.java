@@ -34,7 +34,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 
 
     private List<List<Object>> accountData = new ArrayList<>();
-    
+
 
     public DividendsContractServiceImpl(){
 
@@ -66,7 +66,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			e.printStackTrace();
 		}
     }
-    
+
     public Uint256 getMasterTotalTokens(DividendsContract contract){
     	System.out.println("getMasterTotalToken function");
     	try {
@@ -83,7 +83,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public Uint256 getInvestorInvestment(DividendsContract contract,Address a){
     	System.out.println("getInvestorInvestment function");
     	try {
@@ -114,7 +114,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			e.printStackTrace();
 		}
     }
-    
+
     public void masterRoundOfInvestment(DividendsContract contract, Uint256 currentValueOfTheCompany){
     	System.out.println("masterRoundOfInvestment function");
     	try{
@@ -128,7 +128,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			e.printStackTrace();
 		}
     }
-    
+
     public Uint256 getMasterValueOfOneToken(DividendsContract contract){
     	System.out.println("getMasterValueOfOneToken function");
     	try{
@@ -145,7 +145,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public Uint256 getInvestorTokens(DividendsContract contract, Address a){
     	System.out.println("getInvestorTokens function");
     	try{
@@ -162,7 +162,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public List<Type> investors(DividendsContract contract, Address a){
     	System.out.println("investors map");
     	try{
@@ -179,7 +179,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public void newInvestor(DividendsContract contract, Address investorAddress, Uint256 moneyInvested){
     	System.out.println("newInvestor funnction");
     	try{
@@ -192,12 +192,12 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			e.printStackTrace();
 		}
     }
-    
+
     public Uint256 getInvestorDividendsEarned(DividendsContract contract, Address a){
     	System.out.println("getInvestorDividendsEarned");
     	try{
     		Uint256 val = contract.getInvestorsDividendsEarned(a).get();
-    		System.out.println("dividends earned: "+val); 
+    		System.out.println("dividends earned: "+val);
     		return val;
     	} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -209,7 +209,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public void updateInvestorMoneyInvested(DividendsContract contract,Address investorAddress,Uint256 moneyInvested){
     	System.out.println("updateInvestorMoneyInvested function");
     	try{
@@ -223,7 +223,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			e.printStackTrace();
 		}
     }
-    
+
     public Bool isInvestor(DividendsContract contract, Address investorsAddress){
     	System.out.println("isInvestor function");
     	try {
@@ -240,7 +240,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public Uint256 getInvestorsTotalMoneyInvested(DividendsContract contract, Address a){
     	System.out.println("getInvestorTotalMoneyInvested function");
     	try{
@@ -257,7 +257,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public Address investorNumberI(DividendsContract contract, Uint256 i){
     	System.out.println("investorNumberI function");
     	try{
@@ -274,7 +274,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public Uint256 getInvestorsCount(DividendsContract contract){
     	System.out.println("getInvestorsCount function");
     	try{
@@ -320,12 +320,6 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 		return null;
 	}
 
-
-	@Override
-	public void deployDividends() {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 	@Override
