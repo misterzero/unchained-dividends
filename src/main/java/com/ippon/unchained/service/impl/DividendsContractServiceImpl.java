@@ -291,6 +291,23 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
+    
+    public Uint256 getMasterTotalMoneyInvested(DividendsContract contract){
+    	System.out.println("getMasterTotalMoneyInvested function");
+    	try{
+    		Uint256 val = contract.getMasterTotalMoneyInvested().get();
+    		System.out.println("total money invested: "+val);
+    		return val;
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
 
 
 	@Override

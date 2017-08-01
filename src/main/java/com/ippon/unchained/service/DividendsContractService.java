@@ -24,4 +24,6 @@ public interface DividendsContractService extends Web3JService{
     Uint256 getMasterTotalTokens(DividendsContract contract);
     
     void distributeDividends(DividendsContract contract,Uint256 dividends);
+    
+    Uint256 getMasterTotalMoneyInvested(DividendsContract contract);
 }
