@@ -77,21 +77,17 @@ public class InvestorServiceImpl implements InvestorService{
         List<ExtendedUser> users = extendedUserRepository.findAll();
     	for(ExtendedUser e : users){
     		long userId = e.getAccountId();
-    		for(Investor i: investors){
-    			long investorId = i.getAccountId();
-    			if(investorId == userId){
-    				Address a = new Address(e.getAddress());
-    				if(dividendsContractService.isInvestor(contract, a).getValue()){
-    					i.setIsInvestor(true);
-	    				i.setDividendsEarned(dividendsContractService.getInvestorDividendsEarned(contract, a).getValue().intValue());
-	    				i.setTokens(dividendsContractService.getInvestorTokens(contract, a).getValue().intValue());
-	    				i.setTotalMoneyInvested(dividendsContractService.getInvestorsTotalMoneyInvested(contract, a).getValue().intValue());
-    				}
-    				else{
-    					i.setIsInvestor(false);
-    				}
-    			}
+    		Investor i = findByAccountId(userId).get(0);
+    		Address a = new Address(e.getAddress());
+    		if(dividendsContractService.isInvestor(contract, a).getValue()){
+    			i.setIsInvestor(true);
+    			i.setDividendsEarned(dividendsContractService.getInvestorDividendsEarned(contract, a).getValue().intValue());
+	    		i.setTokens(dividendsContractService.getInvestorTokens(contract, a).getValue().intValue());
+	    		i.setTotalMoneyInvested(dividendsContractService.getInvestorsTotalMoneyInvested(contract, a).getValue().intValue());
     		}
+    		else{
+   				i.setIsInvestor(false);
+   			}
     	}
     	return investors;
     }
