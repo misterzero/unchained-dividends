@@ -265,7 +265,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public Uint256 getMasterTotalMoneyInvested(DividendsContract contract){
     	System.out.println("getMasterTotalMoneyInvested function");
     	try{
