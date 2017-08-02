@@ -88,6 +88,7 @@ public class AccountResource {
                     e.setAddress(address);
                     Investor i = new Investor();
                     i.setAccountId(e.getAccountId());
+                    i.setMoneyInvested(0);
                     try {
 						extendedUserResource.createExtendedUser(e);
 						investorResource.createInvestor(i);
