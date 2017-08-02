@@ -5,7 +5,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;</button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" *jhiHasAnyAuthority="'ROLE_ADMIN'">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" [hidden]="!extendedUser.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
@@ -24,7 +24,7 @@
         </div>
 
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer" *jhiHasAnyAuthority="'ROLE_ADMIN'">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
             <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>

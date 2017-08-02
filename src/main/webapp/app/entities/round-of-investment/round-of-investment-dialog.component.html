@@ -5,7 +5,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;</button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" *jhiHasAnyAuthority="'ROLE_ADMIN'">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" [hidden]="!roundOfInvestment.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
@@ -24,11 +24,11 @@
         </div>
 
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+    <div class="modal-footer" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
             <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" [disabled]="editForm.form.invalid" class="btn btn-primary">
+        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit" [disabled]="editForm.form.invalid" class="btn btn-primary">
             <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
