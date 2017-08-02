@@ -3,20 +3,11 @@ package com.ippon.unchained.service.impl;
 import com.ippon.unchained.service.DividendsContractService;
 import com.ippon.unchained.service.solidity.DividendsContract;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Bool;
-import org.web3j.abi.datatypes.Utf8String;
 import org.web3j.abi.datatypes.generated.Uint256;
-import org.web3j.crypto.Credentials;
-import org.web3j.protocol.Web3j;
-import org.web3j.protocol.core.DefaultBlockParameterName;
-import org.web3j.protocol.core.methods.response.EthAccounts;
-import org.web3j.protocol.core.methods.response.EthGetBalance;
-import org.web3j.protocol.core.methods.response.TransactionReceipt;
-import org.web3j.protocol.core.methods.response.Web3ClientVersion;
 import org.web3j.abi.datatypes.Type;
 
 import java.io.IOException;
@@ -34,7 +25,7 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 
 
     private List<List<Object>> accountData = new ArrayList<>();
-    
+
 
     public DividendsContractServiceImpl(){
 
@@ -54,24 +45,15 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 
 
     public void init(DividendsContract contract,Address a1, Address a2, Address a3){
-    	System.out.println("Init function");
-    	try {
-			contract.init(a1,a2,a3).get();
-			System.out.println("end of the init function");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	LOGGER.info("Init function");
+        contract.init(a1,a2,a3);
     }
-    
+
     public Uint256 getMasterTotalTokens(DividendsContract contract){
-    	System.out.println("getMasterTotalToken function");
+    	LOGGER.info("getMasterTotalToken function");
     	try {
 			Uint256 val = contract.getMasterTotalTokens().get();
-			System.out.println("total tokens: "+val);
+			LOGGER.info("total tokens: "+val);
 			return val;
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -83,12 +65,12 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public Uint256 getInvestorInvestment(DividendsContract contract,Address a){
-    	System.out.println("getInvestorInvestment function");
+    	LOGGER.info("getInvestorInvestment function");
     	try {
     		Uint256 val = contract.getInvestorInvestment(a).get();
-    		System.out.println("investment: "+val);
+    		LOGGER.info("investment: "+val);
     		return val;
     	} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -102,10 +84,10 @@ public class DividendsContractServiceImpl implements DividendsContractService{
     }
 
     public void distributeDividends(DividendsContract contract,Uint256 dividends){
-    	System.out.println("distributeDividends function");
+    	LOGGER.info("distributeDividends function");
     	try {
     		contract.distributeDividends(dividends).get();
-    		System.out.println("dividends have been distributed.");
+    		LOGGER.info("dividends have been distributed.");
     	} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -114,26 +96,18 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			e.printStackTrace();
 		}
     }
-    
+
     public void masterRoundOfInvestment(DividendsContract contract, Uint256 currentValueOfTheCompany){
-    	System.out.println("masterRoundOfInvestment function");
-    	try{
-    		contract.masterRoundOfInvestment(currentValueOfTheCompany).get();
-    		System.out.println("end of the round of investment");
-    	} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    	LOGGER.info("masterRoundOfInvestment function");
+        contract.masterRoundOfInvestment(currentValueOfTheCompany);
+        LOGGER.info("end of the round of investment");
     }
-    
+
     public Uint256 getMasterValueOfOneToken(DividendsContract contract){
-    	System.out.println("getMasterValueOfOneToken function");
+    	LOGGER.info("getMasterValueOfOneToken function");
     	try{
     		Uint256 val = contract.getMasterValueOfOneToken().get();
-    		System.out.println("value of one token: "+val);
+    		LOGGER.info("value of one token: "+val);
     		return val;
     	} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -145,12 +119,12 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public Uint256 getInvestorTokens(DividendsContract contract, Address a){
-    	System.out.println("getInvestorTokens function");
+    	LOGGER.info("getInvestorTokens function");
     	try{
     		Uint256 val = contract.getInvestorTokens(a).get();
-    		System.out.println("tokens: "+val);
+    		LOGGER.info("tokens: "+val);
     		return val;
     	} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -162,12 +136,12 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public List<Type> investors(DividendsContract contract, Address a){
-    	System.out.println("investors map");
+    	LOGGER.info("investors map");
     	try{
     		List<Type> i = contract.investors(a).get();
-    		System.out.println("list of all the investors");
+    		LOGGER.info("list of all the investors");
     		return i;
     	} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -179,9 +153,9 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public void newInvestor(DividendsContract contract, Address investorAddress, Uint256 moneyInvested){
-    	System.out.println("newInvestor funnction");
+    	LOGGER.info("newInvestor funnction");
     	try{
     		contract.newInvestor(investorAddress, moneyInvested).get();
     	} catch (InterruptedException e) {
@@ -192,12 +166,12 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			e.printStackTrace();
 		}
     }
-    
+
     public Uint256 getInvestorDividendsEarned(DividendsContract contract, Address a){
-    	System.out.println("getInvestorDividendsEarned");
+    	LOGGER.info("getInvestorDividendsEarned");
     	try{
     		Uint256 val = contract.getInvestorsDividendsEarned(a).get();
-    		System.out.println("dividends earned: "+val); 
+    		LOGGER.info("dividends earned: "+val);
     		return val;
     	} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -209,12 +183,12 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public void updateInvestorMoneyInvested(DividendsContract contract,Address investorAddress,Uint256 moneyInvested){
-    	System.out.println("updateInvestorMoneyInvested function");
+    	LOGGER.info("updateInvestorMoneyInvested function");
     	try{
     		contract.updateInvestorMoneyInvested(investorAddress, moneyInvested).get();
-    		System.out.println("money invested: "+moneyInvested);
+    		LOGGER.info("money invested: "+moneyInvested);
     	} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -223,12 +197,12 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			e.printStackTrace();
 		}
     }
-    
+
     public Bool isInvestor(DividendsContract contract, Address investorsAddress){
-    	System.out.println("isInvestor function");
+    	LOGGER.info("isInvestor function");
     	try {
     		Bool b = contract.isInvestor(investorsAddress).get();
-    		System.out.println("is investor response: "+b);
+    		LOGGER.info("is investor response: "+b);
     		return b;
     	} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -240,12 +214,12 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public Uint256 getInvestorsTotalMoneyInvested(DividendsContract contract, Address a){
-    	System.out.println("getInvestorTotalMoneyInvested function");
+    	LOGGER.info("getInvestorTotalMoneyInvested function");
     	try{
 	    	Uint256 val = contract.getInvestorsTotalMoneyInvested(a).get();
-	    	System.out.println("total money invested: "+val);
+	    	LOGGER.info("total money invested: "+val);
 	    	return val;
     	} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -257,12 +231,12 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public Address investorNumberI(DividendsContract contract, Uint256 i){
-    	System.out.println("investorNumberI function");
+    	LOGGER.info("investorNumberI function");
     	try{
     		Address a = contract.investorsList(i).get();
-    		System.out.println("address of the investor number "+i+": "+a);
+    		LOGGER.info("address of the investor number "+i+": "+a);
     		return a;
     	} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -274,12 +248,29 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 			return null;
 		}
     }
-    
+
     public Uint256 getInvestorsCount(DividendsContract contract){
-    	System.out.println("getInvestorsCount function");
+    	LOGGER.info("getInvestorsCount function");
     	try{
     		Uint256 val = contract.getInvestorsCount().get();
-    		System.out.println("count of investors: "+val);
+    		LOGGER.info("count of investors: "+val);
+    		return val;
+    	} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+    }
+
+    public Uint256 getMasterTotalMoneyInvested(DividendsContract contract){
+    	System.out.println("getMasterTotalMoneyInvested function");
+    	try{
+    		Uint256 val = contract.getMasterTotalMoneyInvested().get();
+    		System.out.println("total money invested: "+val);
     		return val;
     	} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -320,12 +311,6 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 		return null;
 	}
 
-
-	@Override
-	public void deployDividends() {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 	@Override

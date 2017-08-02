@@ -53,6 +53,9 @@ public class InvestorResourceIntTest {
     private static final Integer DEFAULT_TOTAL_MONEY_INVESTED = 1;
     private static final Integer UPDATED_TOTAL_MONEY_INVESTED = 2;
 
+    private static final Long DEFAULT_ACCOUNT_ID = 1L;
+    private static final Long UPDATED_ACCOUNT_ID = 2L;
+
     @Autowired
     private InvestorRepository investorRepository;
 
@@ -97,7 +100,8 @@ public class InvestorResourceIntTest {
             .dividendsEarned(DEFAULT_DIVIDENDS_EARNED)
             .isInvestor(DEFAULT_IS_INVESTOR)
             .moneyInvested(DEFAULT_MONEY_INVESTED)
-            .totalMoneyInvested(DEFAULT_TOTAL_MONEY_INVESTED);
+            .totalMoneyInvested(DEFAULT_TOTAL_MONEY_INVESTED)
+            .accountId(DEFAULT_ACCOUNT_ID);
         return investor;
     }
 
@@ -126,6 +130,7 @@ public class InvestorResourceIntTest {
         assertThat(testInvestor.isIsInvestor()).isEqualTo(DEFAULT_IS_INVESTOR);
         assertThat(testInvestor.getMoneyInvested()).isEqualTo(DEFAULT_MONEY_INVESTED);
         assertThat(testInvestor.getTotalMoneyInvested()).isEqualTo(DEFAULT_TOTAL_MONEY_INVESTED);
+        assertThat(testInvestor.getAccountId()).isEqualTo(DEFAULT_ACCOUNT_ID);
     }
 
     @Test
@@ -162,7 +167,8 @@ public class InvestorResourceIntTest {
             .andExpect(jsonPath("$.[*].dividendsEarned").value(hasItem(DEFAULT_DIVIDENDS_EARNED)))
             .andExpect(jsonPath("$.[*].isInvestor").value(hasItem(DEFAULT_IS_INVESTOR.booleanValue())))
             .andExpect(jsonPath("$.[*].moneyInvested").value(hasItem(DEFAULT_MONEY_INVESTED)))
-            .andExpect(jsonPath("$.[*].totalMoneyInvested").value(hasItem(DEFAULT_TOTAL_MONEY_INVESTED)));
+            .andExpect(jsonPath("$.[*].totalMoneyInvested").value(hasItem(DEFAULT_TOTAL_MONEY_INVESTED)))
+            .andExpect(jsonPath("$.[*].accountId").value(hasItem(DEFAULT_ACCOUNT_ID.intValue())));
     }
 
     @Test
@@ -180,7 +186,8 @@ public class InvestorResourceIntTest {
             .andExpect(jsonPath("$.dividendsEarned").value(DEFAULT_DIVIDENDS_EARNED))
             .andExpect(jsonPath("$.isInvestor").value(DEFAULT_IS_INVESTOR.booleanValue()))
             .andExpect(jsonPath("$.moneyInvested").value(DEFAULT_MONEY_INVESTED))
-            .andExpect(jsonPath("$.totalMoneyInvested").value(DEFAULT_TOTAL_MONEY_INVESTED));
+            .andExpect(jsonPath("$.totalMoneyInvested").value(DEFAULT_TOTAL_MONEY_INVESTED))
+            .andExpect(jsonPath("$.accountId").value(DEFAULT_ACCOUNT_ID.intValue()));
     }
 
     @Test
@@ -206,7 +213,8 @@ public class InvestorResourceIntTest {
             .dividendsEarned(UPDATED_DIVIDENDS_EARNED)
             .isInvestor(UPDATED_IS_INVESTOR)
             .moneyInvested(UPDATED_MONEY_INVESTED)
-            .totalMoneyInvested(UPDATED_TOTAL_MONEY_INVESTED);
+            .totalMoneyInvested(UPDATED_TOTAL_MONEY_INVESTED)
+            .accountId(UPDATED_ACCOUNT_ID);
 
         restInvestorMockMvc.perform(put("/api/investors")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -222,6 +230,7 @@ public class InvestorResourceIntTest {
         assertThat(testInvestor.isIsInvestor()).isEqualTo(UPDATED_IS_INVESTOR);
         assertThat(testInvestor.getMoneyInvested()).isEqualTo(UPDATED_MONEY_INVESTED);
         assertThat(testInvestor.getTotalMoneyInvested()).isEqualTo(UPDATED_TOTAL_MONEY_INVESTED);
+        assertThat(testInvestor.getAccountId()).isEqualTo(UPDATED_ACCOUNT_ID);
     }
 
     @Test

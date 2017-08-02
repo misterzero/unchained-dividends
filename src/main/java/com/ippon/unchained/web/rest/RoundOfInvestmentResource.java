@@ -37,10 +37,10 @@ public class RoundOfInvestmentResource {
     private static final String ENTITY_NAME = "roundOfInvestment";
 
     private final RoundOfInvestmentService roundOfInvestmentService;
-    
+
     @Autowired
     private DividendsContractService dividendsContractService;
-   
+
     @Autowired
     private DividendsContractConfiguration dividendsContractConfiguration;
 
@@ -66,13 +66,13 @@ public class RoundOfInvestmentResource {
         ResponseEntity<RoundOfInvestment> res = ResponseEntity.created(new URI("/api/round-of-investments/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
                 .body(result);
-        executeRoundOfInvestment(result.getId(),roundOfInvestment.getEndDate());
-        
+        executeRoundOfInvestment(roundOfInvestment,roundOfInvestment.getEndDate());
+
         return res;
     }
-    
+
     @Async
-    public void executeRoundOfInvestment(Long id,LocalDate d){
+    public void executeRoundOfInvestment(RoundOfInvestment r,LocalDate d){
     	LocalDate today = LocalDate.now();
     	Timestamp timestamp1 = Timestamp.valueOf(today.atStartOfDay());
     	Timestamp timestamp2 = Timestamp.valueOf(d.atStartOfDay());
@@ -85,14 +85,15 @@ public class RoundOfInvestmentResource {
 			double valueOfTheCompany = DummyClass.getValueOfTheCompany();
 			Uint256 currentValueOfTheCompany =new Uint256((long)(valueOfTheCompany*1000000));
 			DividendsContract contract= dividendsContractConfiguration.getContract();
+			double moneyInvestedBefore = dividendsContractService.getMasterTotalMoneyInvested(contract).getValue().doubleValue();
 			dividendsContractService.masterRoundOfInvestment(contract, currentValueOfTheCompany);
+			double moneyInvestedAfter = dividendsContractService.getMasterTotalMoneyInvested(contract).getValue().doubleValue();
+			double moneyInvestedDuringThisRound = moneyInvestedAfter-moneyInvestedBefore;
 			log.info("round of investment executed with the value of the company: " +valueOfTheCompany);
-	        RoundOfInvestment r = new RoundOfInvestment();
-	        r.setId(id);
 	        r.setTokenValue(dividendsContractService.getMasterValueOfOneToken(contract).getValue().intValue());
-	        r.setInvestors(null);
-	       // updateRoundOfInvestment(r);
-		} catch (InterruptedException  e) {
+	        r.setTotalMoneyInvested(moneyInvestedDuringThisRound);
+	        updateRoundOfInvestment(r);
+		} catch (InterruptedException | URISyntaxException  e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

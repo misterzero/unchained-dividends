@@ -1,14 +1,11 @@
 package com.ippon.unchained.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -33,11 +30,6 @@ public class RoundOfInvestment implements Serializable {
 
     @Column(name = "token_value")
     private Integer tokenValue;
-
-    @OneToMany
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Investor> investors = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -84,29 +76,6 @@ public class RoundOfInvestment implements Serializable {
 
     public void setTokenValue(Integer tokenValue) {
         this.tokenValue = tokenValue;
-    }
-
-    public Set<Investor> getInvestors() {
-        return investors;
-    }
-
-    public RoundOfInvestment investors(Set<Investor> investors) {
-        this.investors = investors;
-        return this;
-    }
-
-    public RoundOfInvestment addInvestor(Investor investor) {
-        this.investors.add(investor);
-        return this;
-    }
-
-    public RoundOfInvestment removeInvestor(Investor investor) {
-        this.investors.remove(investor);
-        return this;
-    }
-
-    public void setInvestors(Set<Investor> investors) {
-        this.investors = investors;
     }
 
     @Override

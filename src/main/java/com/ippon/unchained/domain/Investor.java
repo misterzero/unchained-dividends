@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * An Investor.
+ * A Investor.
  */
 @Entity
 @Table(name = "investor")
@@ -35,6 +35,9 @@ public class Investor implements Serializable {
 
     @Column(name = "total_money_invested")
     private Integer totalMoneyInvested;
+
+    @Column(name = "account_id")
+    private Long accountId;
 
     public Long getId() {
         return id;
@@ -109,6 +112,19 @@ public class Investor implements Serializable {
         this.totalMoneyInvested = totalMoneyInvested;
     }
 
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public Investor accountId(Long accountId) {
+        this.accountId = accountId;
+        return this;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -138,6 +154,7 @@ public class Investor implements Serializable {
             ", isInvestor='" + isIsInvestor() + "'" +
             ", moneyInvested='" + getMoneyInvested() + "'" +
             ", totalMoneyInvested='" + getTotalMoneyInvested() + "'" +
+            ", accountId='" + getAccountId() + "'" +
             "}";
     }
 }
