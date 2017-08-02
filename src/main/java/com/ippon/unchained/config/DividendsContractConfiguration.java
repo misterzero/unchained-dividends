@@ -57,19 +57,19 @@ public class DividendsContractConfiguration {
             extendedUserService.save(new ExtendedUser().accountId(5L).address("0x22d491bde2303f2f43325b2108d26f1eaba1e32b"));
         }
         if (!(investorService.findByAccountId(5L).size() > 0)) {
-            investorService.save(new Investor().accountId(5L));
+            investorService.save(new Investor().accountId(5L).moneyInvested(0));
         }
         if (!(extendedUserService.findByAccountId(6L).size() > 0)) {
             extendedUserService.save(new ExtendedUser().accountId(6L).address("0xe11ba2b4d45eaed5996cd0823791e0c93114882d"));
         }
         if (!(investorService.findByAccountId(6L).size() > 0)) {
-            investorService.save(new Investor().accountId(6L));
+            investorService.save(new Investor().accountId(6L).moneyInvested(0));
         }
         if (!(extendedUserService.findByAccountId(7L).size() > 0)) {
             extendedUserService.save(new ExtendedUser().accountId(7L).address("0xd03ea8624c8c5987235048901fb614fdca89b117"));
         }
         if (!(investorService.findByAccountId(7L).size() > 0)) {
-            investorService.save(new Investor().accountId(7L));
+            investorService.save(new Investor().accountId(7L).moneyInvested(0));
         }
 
         DividendsContract DividendsContract = null;
