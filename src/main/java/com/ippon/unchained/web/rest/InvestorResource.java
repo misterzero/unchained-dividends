@@ -47,6 +47,7 @@ public class InvestorResource {
         if (investor.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new investor cannot already have an ID")).body(null);
         }
+        investor.setMoneyInvested(0);
         Investor result = investorService.save(investor);
         return ResponseEntity.created(new URI("/api/investors/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
