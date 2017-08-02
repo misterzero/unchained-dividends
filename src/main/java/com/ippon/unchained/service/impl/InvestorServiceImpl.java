@@ -107,7 +107,32 @@ public class InvestorServiceImpl implements InvestorService{
     @Transactional(readOnly = true)
     public Investor findOne(Long id) {
         log.debug("Request to get Investor : {}", id);
-        return investorRepository.findOne(id);
+        Investor investor = investorRepository.findOne(id);
+        investor = setInvestorInformation(investor);
+        return investor;
+    }
+    
+    //TODO put in repositoryImplementation
+    
+    public Investor setInvestorInformation(Investor investor){
+    	DividendsContract contract= dividendsContractConfiguration.getContract();
+    	List<ExtendedUser> users = extendedUserRepository.findAll();
+    	for(ExtendedUser e: users){
+    		if(e.getAccountId()==investor.getAccountId()){
+    			Address a = new Address(e.getAddress());
+				if(dividendsContractService.isInvestor(contract, a).getValue()){
+					investor.setIsInvestor(true);
+					investor.setDividendsEarned(dividendsContractService.getInvestorDividendsEarned(contract, a).getValue().intValue());
+					investor.setMoneyInvested(dividendsContractService.getInvestorInvestment(contract, a).getValue().intValue());
+					investor.setTokens(dividendsContractService.getInvestorTokens(contract, a).getValue().intValue());
+					investor.setTotalMoneyInvested(dividendsContractService.getInvestorsTotalMoneyInvested(contract, a).getValue().intValue());
+				}
+				else{
+					investor.setIsInvestor(false);
+				}
+    		}
+    	}
+    	return investor;
     }
 
     /**
