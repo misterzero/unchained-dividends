@@ -6,6 +6,7 @@ export class Investor {
         public isInvestor?: boolean,
         public moneyInvested?: number,
         public totalMoneyInvested?: number,
+        public accountId?: number,
     ) {
         this.isInvestor = false;
     }

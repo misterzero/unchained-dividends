@@ -18,7 +18,6 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="unchainedApp.extendedUser.accountId">Account Id</span></th>
-            <th><span jhiTranslate="unchainedApp.extendedUser.moneyInvested">Money Invested</span></th>
             <th><span jhiTranslate="unchainedApp.extendedUser.address">Address</span></th>
             <th></th>
             </tr>
@@ -27,7 +26,6 @@
             <tr *ngFor="let extendedUser of extendedUsers ;trackBy: trackId">
                 <td><a [routerLink]="['../extended-user', extendedUser.id ]">{{extendedUser.id}}</a></td>
                 <td>{{extendedUser.accountId}}</td>
-                <td>{{extendedUser.moneyInvested}}</td>
                 <td>{{extendedUser.address}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">

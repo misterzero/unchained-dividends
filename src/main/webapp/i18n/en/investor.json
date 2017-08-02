@@ -19,7 +19,8 @@
             "dividendsEarned": "Dividends Earned",
             "isInvestor": "Is Investor",
             "moneyInvested": "Money Invested",
-            "totalMoneyInvested": "Total Money Invested"
+            "totalMoneyInvested": "Total Money Invested",
+            "accountId": "Account Id"
         }
     }
 }

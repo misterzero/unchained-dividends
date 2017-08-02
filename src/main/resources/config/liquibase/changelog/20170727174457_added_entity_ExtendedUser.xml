@@ -26,10 +26,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="money_invested" type="integer">
-                <constraints nullable="true" />
-            </column>
-
             <column name="address" type="varchar(255)">
                 <constraints nullable="true" />
             </column>

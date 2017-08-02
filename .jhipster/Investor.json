@@ -21,6 +21,10 @@
         {
             "fieldName": "totalMoneyInvested",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "accountId",
+            "fieldType": "Long"
         }
     ],
     "changelogDate": "20170727144608",

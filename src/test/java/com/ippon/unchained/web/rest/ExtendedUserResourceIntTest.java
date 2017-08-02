@@ -20,7 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.web3j.abi.datatypes.Address;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -42,15 +41,8 @@ public class ExtendedUserResourceIntTest {
     private static final Long DEFAULT_ACCOUNT_ID = 1L;
     private static final Long UPDATED_ACCOUNT_ID = 2L;
 
-    private static final Integer DEFAULT_MONEY_INVESTED = 1;
-    private static final Integer UPDATED_MONEY_INVESTED = 2;
-
     private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
     private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
-
-    // TODO: Add support for address to be an Address, not a String
-    // private static final Address DEFAULT_ADDRESS = new Address("AAAAAAAAAA");
-    // private static final Address UPDATED_ADDRESS = new Address("BBBBBBBBBB");
 
     @Autowired
     private ExtendedUserRepository extendedUserRepository;
@@ -93,7 +85,6 @@ public class ExtendedUserResourceIntTest {
     public static ExtendedUser createEntity(EntityManager em) {
         ExtendedUser extendedUser = new ExtendedUser()
             .accountId(DEFAULT_ACCOUNT_ID)
-            .moneyInvested(DEFAULT_MONEY_INVESTED)
             .address(DEFAULT_ADDRESS);
         return extendedUser;
     }
@@ -119,7 +110,6 @@ public class ExtendedUserResourceIntTest {
         assertThat(extendedUserList).hasSize(databaseSizeBeforeCreate + 1);
         ExtendedUser testExtendedUser = extendedUserList.get(extendedUserList.size() - 1);
         assertThat(testExtendedUser.getAccountId()).isEqualTo(DEFAULT_ACCOUNT_ID);
-        assertThat(testExtendedUser.getMoneyInvested()).isEqualTo(DEFAULT_MONEY_INVESTED);
         assertThat(testExtendedUser.getAddress()).isEqualTo(DEFAULT_ADDRESS);
     }
 
@@ -154,7 +144,6 @@ public class ExtendedUserResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(extendedUser.getId().intValue())))
             .andExpect(jsonPath("$.[*].accountId").value(hasItem(DEFAULT_ACCOUNT_ID.intValue())))
-            .andExpect(jsonPath("$.[*].moneyInvested").value(hasItem(DEFAULT_MONEY_INVESTED)))
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())));
     }
 
@@ -170,7 +159,6 @@ public class ExtendedUserResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(extendedUser.getId().intValue()))
             .andExpect(jsonPath("$.accountId").value(DEFAULT_ACCOUNT_ID.intValue()))
-            .andExpect(jsonPath("$.moneyInvested").value(DEFAULT_MONEY_INVESTED))
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()));
     }
 
@@ -194,7 +182,6 @@ public class ExtendedUserResourceIntTest {
         ExtendedUser updatedExtendedUser = extendedUserRepository.findOne(extendedUser.getId());
         updatedExtendedUser
             .accountId(UPDATED_ACCOUNT_ID)
-            .moneyInvested(UPDATED_MONEY_INVESTED)
             .address(UPDATED_ADDRESS);
 
         restExtendedUserMockMvc.perform(put("/api/extended-users")
@@ -207,7 +194,6 @@ public class ExtendedUserResourceIntTest {
         assertThat(extendedUserList).hasSize(databaseSizeBeforeUpdate);
         ExtendedUser testExtendedUser = extendedUserList.get(extendedUserList.size() - 1);
         assertThat(testExtendedUser.getAccountId()).isEqualTo(UPDATED_ACCOUNT_ID);
-        assertThat(testExtendedUser.getMoneyInvested()).isEqualTo(UPDATED_MONEY_INVESTED);
         assertThat(testExtendedUser.getAddress()).isEqualTo(UPDATED_ADDRESS);
     }
 
