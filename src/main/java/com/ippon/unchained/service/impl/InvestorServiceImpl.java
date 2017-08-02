@@ -84,7 +84,6 @@ public class InvestorServiceImpl implements InvestorService{
     				if(dividendsContractService.isInvestor(contract, a).getValue()){
     					i.setIsInvestor(true);
 	    				i.setDividendsEarned(dividendsContractService.getInvestorDividendsEarned(contract, a).getValue().intValue());
-	    				i.setMoneyInvested(dividendsContractService.getInvestorInvestment(contract, a).getValue().intValue());
 	    				i.setTokens(dividendsContractService.getInvestorTokens(contract, a).getValue().intValue());
 	    				i.setTotalMoneyInvested(dividendsContractService.getInvestorsTotalMoneyInvested(contract, a).getValue().intValue());
     				}
@@ -123,7 +122,6 @@ public class InvestorServiceImpl implements InvestorService{
 				if(dividendsContractService.isInvestor(contract, a).getValue()){
 					investor.setIsInvestor(true);
 					investor.setDividendsEarned(dividendsContractService.getInvestorDividendsEarned(contract, a).getValue().intValue());
-					investor.setMoneyInvested(dividendsContractService.getInvestorInvestment(contract, a).getValue().intValue());
 					investor.setTokens(dividendsContractService.getInvestorTokens(contract, a).getValue().intValue());
 					investor.setTotalMoneyInvested(dividendsContractService.getInvestorsTotalMoneyInvested(contract, a).getValue().intValue());
 				}
