@@ -63,6 +63,18 @@ public class InvestorServiceImpl implements InvestorService{
     }
 
     /**
+     *  Get one investor by id.
+     *
+     *  @param accountId the id of the user
+     *  @return the (list of) entities corresponding to this user
+     */
+    @Transactional(readOnly = true)
+    public List<Investor> findByAccountId(Long accountId) {
+        log.debug("Request to get Investor by accountId : {}", accountId);
+        return investorRepository.findByAccountId(accountId);
+    }
+
+    /**
      *  Delete the  investor by id.
      *
      *  @param id the id of the entity

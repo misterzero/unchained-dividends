@@ -52,13 +52,25 @@ public class DividendsContractConfiguration {
         LOGGER.info("Deploying Dividends");
 
         Credentials credentials = Credentials.create((String) "4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d");
-        // Creating three investor users
-        extendedUserService.save(new ExtendedUser().accountId(5L).address("0x22d491bde2303f2f43325b2108d26f1eaba1e32b"));
-        investorService.save(new Investor().accountId(5L));
-        extendedUserService.save(new ExtendedUser().accountId(6L).address("0xe11ba2b4d45eaed5996cd0823791e0c93114882d"));
-        investorService.save(new Investor().accountId(6L));
-        extendedUserService.save(new ExtendedUser().accountId(7L).address("0xd03ea8624c8c5987235048901fb614fdca89b117"));
-        investorService.save(new Investor().accountId(7L));
+        // Creating three extendedUsers and investors corresponding to users of ID 5, 6, and 7
+        if (!(extendedUserService.findByAccountId(5L).size() > 0)) {
+            extendedUserService.save(new ExtendedUser().accountId(5L).address("0x22d491bde2303f2f43325b2108d26f1eaba1e32b"));
+        }
+        if (!(investorService.findByAccountId(5L).size() > 0)) {
+            investorService.save(new Investor().accountId(5L));
+        }
+        if (!(extendedUserService.findByAccountId(6L).size() > 0)) {
+            extendedUserService.save(new ExtendedUser().accountId(6L).address("0xe11ba2b4d45eaed5996cd0823791e0c93114882d"));
+        }
+        if (!(investorService.findByAccountId(6L).size() > 0)) {
+            investorService.save(new Investor().accountId(6L));
+        }
+        if (!(extendedUserService.findByAccountId(7L).size() > 0)) {
+            extendedUserService.save(new ExtendedUser().accountId(7L).address("0xd03ea8624c8c5987235048901fb614fdca89b117"));
+        }
+        if (!(investorService.findByAccountId(7L).size() > 0)) {
+            investorService.save(new Investor().accountId(7L));
+        }
 
         DividendsContract DividendsContract = null;
 

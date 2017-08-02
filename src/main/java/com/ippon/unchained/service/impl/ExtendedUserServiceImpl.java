@@ -63,6 +63,18 @@ public class ExtendedUserServiceImpl implements ExtendedUserService{
     }
 
     /**
+     *  Get one extendedUser by accountId.
+     *
+     *  @param id the id of the entity
+     *  @return the entity
+     */
+    @Transactional(readOnly = true)
+    public List<ExtendedUser> findByAccountId(Long id) {
+        log.debug("Request to get ExtendedUsers by accountId : {}", id);
+        return extendedUserRepository.findByAccountId(id);
+    }
+
+    /**
      *  Delete the  extendedUser by id.
      *
      *  @param id the id of the entity

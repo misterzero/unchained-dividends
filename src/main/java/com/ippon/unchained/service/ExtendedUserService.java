@@ -32,6 +32,14 @@ public interface ExtendedUserService {
     ExtendedUser findOne(Long id);
 
     /**
+     *  Get the extendedUser by "accountId".
+     *
+     *  @param accountId the accountId of the user
+     *  @return the entity associated with that user
+     */
+    List<ExtendedUser> findByAccountId(Long accountId);
+
+    /**
      *  Delete the "id" extendedUser.
      *
      *  @param id the id of the entity

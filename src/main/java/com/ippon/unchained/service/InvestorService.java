@@ -32,6 +32,14 @@ public interface InvestorService {
     Investor findOne(Long id);
 
     /**
+     *  Get the investor with matching "accountId".
+     *
+     *  @param accountId the id of the user
+     *  @return the (list of) entities corresponding to this user
+     */
+    List<Investor> findByAccountId(Long accountId);
+
+    /**
      *  Delete the "id" investor.
      *
      *  @param id the id of the entity
