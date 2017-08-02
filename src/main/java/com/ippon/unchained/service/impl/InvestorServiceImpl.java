@@ -1,13 +1,22 @@
 package com.ippon.unchained.service.impl;
 
+import com.ippon.unchained.service.DividendsContractService;
 import com.ippon.unchained.service.InvestorService;
+import com.ippon.unchained.service.solidity.DividendsContract;
+import com.ippon.unchained.web.rest.ExtendedUserResource;
+import com.ippon.unchained.config.DividendsContractConfiguration;
+import com.ippon.unchained.domain.ExtendedUser;
 import com.ippon.unchained.domain.Investor;
+import com.ippon.unchained.repository.ExtendedUserRepository;
 import com.ippon.unchained.repository.InvestorRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.web3j.abi.datatypes.Address;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -20,9 +29,20 @@ public class InvestorServiceImpl implements InvestorService{
     private final Logger log = LoggerFactory.getLogger(InvestorServiceImpl.class);
 
     private final InvestorRepository investorRepository;
+    
+    @Autowired
+    private ExtendedUserRepository extendedUserRepository;
+    
+    @Autowired
+    private  DividendsContractService dividendsContractService;
+    
+    @Autowired
+    private  DividendsContractConfiguration dividendsContractConfiguration;
 
+    
     public InvestorServiceImpl(InvestorRepository investorRepository) {
         this.investorRepository = investorRepository;
+        
     }
 
     /**
@@ -46,7 +66,35 @@ public class InvestorServiceImpl implements InvestorService{
     @Transactional(readOnly = true)
     public List<Investor> findAll() {
         log.debug("Request to get all Investors");
-        return investorRepository.findAll();
+        List<Investor> investors = investorRepository.findAll();
+        investors = setInvestorsInformation(investors);
+        return investors;
+    }
+    
+    //TODO move to repositoryImpl
+    public List<Investor> setInvestorsInformation(List<Investor> investors){
+    	DividendsContract contract= dividendsContractConfiguration.getContract();
+        List<ExtendedUser> users = extendedUserRepository.findAll();
+    	for(ExtendedUser e : users){
+    		long userId = e.getAccountId();
+    		for(Investor i: investors){
+    			long investorId = i.getAccountId();
+    			if(investorId == userId){
+    				Address a = new Address(e.getAddress());
+    				if(dividendsContractService.isInvestor(contract, a).getValue()){
+    					i.setIsInvestor(true);
+	    				i.setDividendsEarned(dividendsContractService.getInvestorDividendsEarned(contract, a).getValue().intValue());
+	    				i.setMoneyInvested(dividendsContractService.getInvestorInvestment(contract, a).getValue().intValue());
+	    				i.setTokens(dividendsContractService.getInvestorTokens(contract, a).getValue().intValue());
+	    				i.setTotalMoneyInvested(dividendsContractService.getInvestorsTotalMoneyInvested(contract, a).getValue().intValue());
+    				}
+    				else{
+    					i.setIsInvestor(false);
+    				}
+    			}
+    		}
+    	}
+    	return investors;
     }
 
     /**
