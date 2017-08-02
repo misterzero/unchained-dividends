@@ -100,6 +100,10 @@ public class UserDTO {
     public void setLogin(String login) {
         this.login = login;
     }
+    
+    public void setFirstName(String firstName){
+    	this.firstName = firstName;
+    }
 
     public String getFirstName() {
         return firstName;
