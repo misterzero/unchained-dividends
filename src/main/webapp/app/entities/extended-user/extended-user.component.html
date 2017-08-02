@@ -1,4 +1,4 @@
-<div>
+<div *jhiHasAnyAuthority="'ROLE_ADMIN'">
     <h2>
         <span jhiTranslate="unchainedApp.extendedUser.home.title">Extended Users</span>
         <button class="btn btn-primary float-right create-extended-user" [routerLink]="['/', { outlets: { popup: ['extended-user-new'] } }]">
