@@ -45,7 +45,9 @@
             "confirmpassword": "New password confirmation",
             "confirmpassword.placeholder": "Confirm the new password",
             "email": "Email",
-            "email.placeholder": "Your email"
+            "email.placeholder": "Your email",
+            "address": "Address",
+            "address.placeholder": "Your address"
         },
         "messages": {
             "info": {
@@ -79,6 +81,11 @@
                     "invalid": "Your email is invalid.",
                     "minlength": "Your email is required to be at least 5 characters.",
                     "maxlength": "Your email cannot be longer than 50 characters."
+                },
+                "address": {
+                    "required": "Your address is required.",
+                    "invalid": "Your address is invalid.",
+                    "length": "Your email is required to be exactly 42 characters."
                 }
             }
         },

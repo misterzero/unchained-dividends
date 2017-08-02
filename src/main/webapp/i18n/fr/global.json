@@ -45,7 +45,9 @@
             "confirmpassword": "Confirmation du nouveau mot de passe",
             "confirmpassword.placeholder": "Confirmation du nouveau mot de passe",
             "email": "Email",
-            "email.placeholder": "Votre email"
+            "email.placeholder": "Votre email",
+            "address": "Addresse",
+            "address.placeholder": "Votre addresse"
         },
         "messages": {
             "info": {
@@ -79,6 +81,11 @@
                     "minlength": "Votre email doit comporter au moins 5 caractères.",
                     "maxlength": "Votre email ne doit pas comporter plus de 50 caractères.",
                     "invalid": "Votre email n'est pas valide."
+                },
+                "address": {
+                    "required": "Votre addresse est requis.",
+                    "invalid": "Votre addresse n'est pas valide.",
+                    "length": "Votre adresse doit être exactement de 42 caractères."
                 }
             }
         },

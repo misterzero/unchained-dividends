@@ -3,7 +3,11 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
 
 import { Register } from './register.service';
+import { ExtendedUserService } from '../../entities/extended-user/extended-user.service';
+import { InvestorService } from '../../entities/investor/investor.service';
 import { LoginModalService } from '../../shared';
+import { ExtendedUser } from '../../entities/extended-user/extended-user.model';
+import { Investor } from '../../entities/investor/investor.model';
 
 @Component({
     selector: 'jhi-register',
@@ -11,9 +15,12 @@ import { LoginModalService } from '../../shared';
 })
 export class RegisterComponent implements OnInit, AfterViewInit {
 
+    extendedUser: ExtendedUser;
+    investor: Investor;
     confirmPassword: string;
     doNotMatch: string;
     error: string;
+    errorAddressExists: string;
     errorEmailExists: string;
     errorUserExists: string;
     registerAccount: any;
@@ -23,6 +30,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     constructor(
         private languageService: JhiLanguageService,
         private loginModalService: LoginModalService,
+        private extendedUserService: ExtendedUserService,
+        private investorService: InvestorService,
         private registerService: Register,
         private elementRef: ElementRef,
         private renderer: Renderer
@@ -32,6 +41,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.success = false;
         this.registerAccount = {};
+        this.extendedUser = {};
+        this.investor = {};
     }
 
     ngAfterViewInit() {
@@ -48,7 +59,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
             this.errorEmailExists = null;
             this.languageService.getCurrent().then((key) => {
                 this.registerAccount.langKey = key;
-                this.registerService.save(this.registerAccount).subscribe(() => {
+                this.registerService.save(this.registerAccount).flatMap(function(user) {
+                    this.extendedUser.accountId = user.id;
+                    this.investor.accountId = user.id;
+                    return this.extendedUserService.create(this.extendedUser);
+                }).flatMap(function(x) {
+                    return this.investorService.create(this.investor);
+                }).subscribe(() => {
                     this.success = true;
                 }, (response) => this.processError(response));
             });
