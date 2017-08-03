@@ -5,6 +5,7 @@ import com.ippon.unchained.UnchainedApp;
 import com.ippon.unchained.domain.Investor;
 import com.ippon.unchained.repository.InvestorRepository;
 import com.ippon.unchained.service.InvestorService;
+import com.ippon.unchained.service.UserService;
 import com.ippon.unchained.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -63,6 +64,9 @@ public class InvestorResourceIntTest {
     private InvestorService investorService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -81,7 +85,7 @@ public class InvestorResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        InvestorResource investorResource = new InvestorResource(investorService);
+        InvestorResource investorResource = new InvestorResource(investorService, userService);
         this.restInvestorMockMvc = MockMvcBuilders.standaloneSetup(investorResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
