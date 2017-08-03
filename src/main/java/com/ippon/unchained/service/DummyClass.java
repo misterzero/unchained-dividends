@@ -6,10 +6,10 @@ public class DummyClass {
 	public static final HashMap<Integer,Double> dividendsAmount;
 	static{
 		dividendsAmount= new HashMap<Integer,Double>();
-		dividendsAmount.put(1, 24.2);
-		dividendsAmount.put(2, 32.5);
-		dividendsAmount.put(3, 42.0);
-		dividendsAmount.put(4, 10.2);
+		dividendsAmount.put(1, 242.0);
+		dividendsAmount.put(2, 325.0);
+		dividendsAmount.put(3, 420.0);
+		dividendsAmount.put(4, 102.0);
 	}
 	public static final HashMap<Integer,Integer> valueOfTheCompany;
 	static{

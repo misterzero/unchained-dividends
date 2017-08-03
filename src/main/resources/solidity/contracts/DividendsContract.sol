@@ -67,10 +67,10 @@ contract DividendsContract  {
 
     function init(address a1,address a2, address a3) {
         createMaster(1000,100,1000);
-        newInvestor(a1,500);
+        newInvestor(a1,50);
         updateInvestorTokens(a1,50);
         newInvestor(a2,30);
-        updateInvestorTokens(a2,300);
+        updateInvestorTokens(a2,30);
         newInvestor(a3,20);
         updateInvestorTokens(a3,10);
     }
