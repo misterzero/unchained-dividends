@@ -1,8 +1,13 @@
 package com.ippon.unchained.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.ippon.unchained.domain.Authority;
 import com.ippon.unchained.domain.Investor;
+import com.ippon.unchained.domain.User;
+import com.ippon.unchained.security.AuthoritiesConstants;
+import com.ippon.unchained.security.SecurityUtils;
 import com.ippon.unchained.service.InvestorService;
+import com.ippon.unchained.service.UserService;
 import com.ippon.unchained.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -29,8 +34,11 @@ public class InvestorResource {
 
     private final InvestorService investorService;
 
-    public InvestorResource(InvestorService investorService) {
+    private final UserService userService;
+
+    public InvestorResource(InvestorService investorService, UserService userService) {
         this.investorService = investorService;
+        this.userService = userService;
     }
 
     /**
@@ -70,6 +78,7 @@ public class InvestorResource {
         if (investor.getId() == null) {
             return createInvestor(investor);
         }
+        log.debug("Investor money invested: " + investor.getMoneyInvested());
         Investor result = investorService.save(investor);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, investor.getId().toString()))
@@ -98,7 +107,17 @@ public class InvestorResource {
     @Timed
     public ResponseEntity<Investor> getInvestor(@PathVariable Long id) {
         log.debug("REST request to get Investor : {}", id);
-        Investor investor = investorService.findOne(id);
+        User currentUser = userService.getUserWithAuthorities();
+        Investor investor;
+        Authority authority = new Authority();
+        authority.setName(AuthoritiesConstants.ADMIN);
+        if (currentUser.getAuthorities().contains(authority)) {
+            // The admin users should be able to view the any investor's details...
+            investor = investorService.findOne(id);
+        } else {
+            // ...but regular users should only be able to view their own investor details.
+            investor = investorService.findByAccountId(currentUser.getId()).get(0);
+        }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(investor));
     }
 

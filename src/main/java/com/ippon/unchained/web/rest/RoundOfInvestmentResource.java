@@ -2,10 +2,10 @@ package com.ippon.unchained.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.ippon.unchained.config.DividendsContractConfiguration;
+import com.ippon.unchained.domain.ExtendedUser;
+import com.ippon.unchained.domain.Investor;
 import com.ippon.unchained.domain.RoundOfInvestment;
-import com.ippon.unchained.service.DividendsContractService;
-import com.ippon.unchained.service.DummyClass;
-import com.ippon.unchained.service.RoundOfInvestmentService;
+import com.ippon.unchained.service.*;
 import com.ippon.unchained.service.solidity.DividendsContract;
 import com.ippon.unchained.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
+import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.generated.Uint256;
 
 import java.net.URI;
@@ -38,14 +39,24 @@ public class RoundOfInvestmentResource {
 
     private final RoundOfInvestmentService roundOfInvestmentService;
 
+    private final InvestorService investorService;
+
+    private final ExtendedUserService extendedUserService;
+
+
+
     @Autowired
     private DividendsContractService dividendsContractService;
 
     @Autowired
     private DividendsContractConfiguration dividendsContractConfiguration;
 
-    public RoundOfInvestmentResource(RoundOfInvestmentService roundOfInvestmentService) {
+    public RoundOfInvestmentResource(RoundOfInvestmentService roundOfInvestmentService,
+                                     InvestorService investorService,
+                                     ExtendedUserService extendedUserService) {
         this.roundOfInvestmentService = roundOfInvestmentService;
+        this.investorService = investorService;
+        this.extendedUserService = extendedUserService;
     }
 
     /**
@@ -86,12 +97,18 @@ public class RoundOfInvestmentResource {
 			Uint256 currentValueOfTheCompany =new Uint256((long)(valueOfTheCompany));
 			DividendsContract contract= dividendsContractConfiguration.getContract();
 			double moneyInvestedBefore = dividendsContractService.getMasterTotalMoneyInvested(contract).getValue().doubleValue();
+			double investorTotal = 0;
+            for (Investor i : investorService.findAll()) {
+                investorTotal += i.getMoneyInvested();
+                i.setMoneyInvested(0);
+                investorService.save(i);
+            }
 			dividendsContractService.masterRoundOfInvestment(contract, currentValueOfTheCompany);
 			double moneyInvestedAfter = dividendsContractService.getMasterTotalMoneyInvested(contract).getValue().doubleValue();
 			double moneyInvestedDuringThisRound = moneyInvestedAfter-moneyInvestedBefore;
 			log.info("round of investment executed with the value of the company: " +valueOfTheCompany);
 	        r.setTokenValue(dividendsContractService.getMasterValueOfOneToken(contract).getValue().intValue());
-	        r.setTotalMoneyInvested(moneyInvestedDuringThisRound);
+	        r.setTotalMoneyInvested(investorTotal);
 	        updateRoundOfInvestment(r);
 		} catch (InterruptedException | URISyntaxException  e) {
 			// TODO Auto-generated catch block

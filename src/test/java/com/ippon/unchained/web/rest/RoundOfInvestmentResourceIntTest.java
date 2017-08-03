@@ -4,6 +4,8 @@ import com.ippon.unchained.UnchainedApp;
 
 import com.ippon.unchained.domain.RoundOfInvestment;
 import com.ippon.unchained.repository.RoundOfInvestmentRepository;
+import com.ippon.unchained.service.ExtendedUserService;
+import com.ippon.unchained.service.InvestorService;
 import com.ippon.unchained.service.RoundOfInvestmentService;
 import com.ippon.unchained.web.rest.errors.ExceptionTranslator;
 
@@ -56,6 +58,12 @@ public class RoundOfInvestmentResourceIntTest {
     private RoundOfInvestmentService roundOfInvestmentService;
 
     @Autowired
+    private InvestorService investorService;
+
+    @Autowired
+    private ExtendedUserService extendedUserService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -74,7 +82,8 @@ public class RoundOfInvestmentResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        RoundOfInvestmentResource roundOfInvestmentResource = new RoundOfInvestmentResource(roundOfInvestmentService);
+        RoundOfInvestmentResource roundOfInvestmentResource = new RoundOfInvestmentResource(roundOfInvestmentService,
+            investorService, extendedUserService);
         this.restRoundOfInvestmentMockMvc = MockMvcBuilders.standaloneSetup(roundOfInvestmentResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
