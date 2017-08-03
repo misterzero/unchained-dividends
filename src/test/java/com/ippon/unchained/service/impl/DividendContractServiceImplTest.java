@@ -51,7 +51,7 @@ public class DividendContractServiceImplTest {
     public void testDeployDividends() throws ExecutionException, InterruptedException {
         EthAccounts accounts = web3j.ethAccounts().sendAsync().get();
 
-        assertThat(contract.getContractAddress().equals(dividendsContractService.getContractAddress()));
+        assertThat(contract.getContractAddress().equals(config.getContract().getContractAddress()));
         assertThat(accounts.getAccounts().size() == 10);
     }
 

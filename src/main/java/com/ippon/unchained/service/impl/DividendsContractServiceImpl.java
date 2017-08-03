@@ -9,11 +9,14 @@ import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Bool;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.abi.datatypes.Type;
+import org.web3j.protocol.core.Request;
+import org.web3j.protocol.core.Response;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 
@@ -284,21 +287,17 @@ public class DividendsContractServiceImpl implements DividendsContractService{
     }
 
 
-	@Override
 	public String getClientVersion() throws IOException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
-	@Override
 	public Map<String, BigInteger> getAccountMap() throws InterruptedException, ExecutionException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
-	@Override
 	public List<List<Object>> getAccountData() throws ExecutionException, InterruptedException {
 		// TODO Auto-generated method stub
 		return null;
@@ -313,10 +312,18 @@ public class DividendsContractServiceImpl implements DividendsContractService{
 
 
 
-	@Override
 	public String getContractAddress() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+    @Override
+    public <T extends Response> T send(Request request, Class<T> aClass) throws IOException {
+        return null;
+    }
+
+    @Override
+    public <T extends Response> CompletableFuture<T> sendAsync(Request request, Class<T> aClass) {
+        return null;
+    }
 }
