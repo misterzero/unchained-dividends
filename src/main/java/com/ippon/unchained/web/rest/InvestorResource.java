@@ -70,6 +70,7 @@ public class InvestorResource {
         if (investor.getId() == null) {
             return createInvestor(investor);
         }
+        log.debug("Investor money invested: " + investor.getMoneyInvested());
         Investor result = investorService.save(investor);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, investor.getId().toString()))
