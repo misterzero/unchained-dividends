@@ -83,7 +83,7 @@ public class RoundOfInvestmentResource {
     	try {
 			Thread.sleep(10000);
 			double valueOfTheCompany = DummyClass.getValueOfTheCompany();
-			Uint256 currentValueOfTheCompany =new Uint256((long)(valueOfTheCompany*1000000));
+			Uint256 currentValueOfTheCompany =new Uint256((long)(valueOfTheCompany));
 			DividendsContract contract= dividendsContractConfiguration.getContract();
 			double moneyInvestedBefore = dividendsContractService.getMasterTotalMoneyInvested(contract).getValue().doubleValue();
 			dividendsContractService.masterRoundOfInvestment(contract, currentValueOfTheCompany);

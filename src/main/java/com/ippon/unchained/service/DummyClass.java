@@ -7,17 +7,17 @@ public class DummyClass {
 	static{
 		dividendsAmount= new HashMap<Integer,Double>();
 		dividendsAmount.put(1, 24.2);
-		dividendsAmount.put(2, 745.0);
-		dividendsAmount.put(3, 1000.0);
-		dividendsAmount.put(4, 10000.2);
+		dividendsAmount.put(2, 32.5);
+		dividendsAmount.put(3, 42.0);
+		dividendsAmount.put(4, 10.2);
 	}
 	public static final HashMap<Integer,Integer> valueOfTheCompany;
 	static{
 		valueOfTheCompany = new HashMap<Integer,Integer>();
-		valueOfTheCompany.put(1, 100);
-		valueOfTheCompany.put(2, 1000);
-		valueOfTheCompany.put(3, 10000);
-		valueOfTheCompany.put(4, 100000);
+		valueOfTheCompany.put(1, 2000);
+		valueOfTheCompany.put(2, 3000);
+		valueOfTheCompany.put(3, 4000);
+		valueOfTheCompany.put(4, 5000);
 	}
 	
 	public static double getDividendsAmount(){
