@@ -9,10 +9,11 @@ import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Bool;
 import org.web3j.abi.datatypes.Type;
 import org.web3j.abi.datatypes.generated.Uint256;
+import org.web3j.protocol.Web3jService;
 
 import com.ippon.unchained.service.solidity.DividendsContract;
 
-public interface DividendsContractService extends Web3JService{
+public interface DividendsContractService extends Web3jService{
 
     BigDecimal getBalanceDividends() throws ExecutionException, InterruptedException, IOException;
 
