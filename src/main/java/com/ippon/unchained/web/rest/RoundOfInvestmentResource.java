@@ -98,7 +98,10 @@ public class RoundOfInvestmentResource {
 			DividendsContract contract= dividendsContractConfiguration.getContract();
 			double investorTotal = 0;
             for (Investor i : investorService.findAll()) {
+                Address address = new Address(extendedUserService.findByAccountId(i.getAccountId()).get(0).getAddress());
+                Uint256 investment = new Uint256(i.getMoneyInvested());
                 investorTotal += i.getMoneyInvested();
+                dividendsContractService.updateInvestorMoneyInvested(contract, address, investment);
                 i.setMoneyInvested(0);
                 investorService.save(i);
             }
