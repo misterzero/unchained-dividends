@@ -1,48 +1,17 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
 
     <div class="modal-header">
-        <h4 class="modal-title" id="myInvestorLabel" jhiTranslate="unchainedApp.investor.home.createOrEditLabel">Create or edit a Investor</h4>
+        <h4 class="modal-title" id="myInvestorLabel">Invest money</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
                 (click)="clear()">&times;</button>
     </div>
-    <div class="modal-body" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+    <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!investor.id">
-            <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="investor.id" readonly />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="unchainedApp.investor.tokens" for="field_tokens">Tokens</label>
-            <input type="number" class="form-control" name="tokens" id="field_tokens"
-                [(ngModel)]="investor.tokens"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="unchainedApp.investor.dividendsEarned" for="field_dividendsEarned">Dividends Earned</label>
-            <input type="number" class="form-control" name="dividendsEarned" id="field_dividendsEarned"
-                [(ngModel)]="investor.dividendsEarned"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="unchainedApp.investor.isInvestor" for="field_isInvestor">Is Investor</label>
-            <input type="checkbox" class="form-control" name="isInvestor" id="field_isInvestor"
-                [(ngModel)]="investor.isInvestor"  />
-        </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="unchainedApp.investor.moneyInvested" for="field_moneyInvested">Money Invested</label>
             <input type="number" class="form-control" name="moneyInvested" id="field_moneyInvested"
                 [(ngModel)]="investor.moneyInvested"  />
         </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="unchainedApp.investor.totalMoneyInvested" for="field_totalMoneyInvested">Total Money Invested</label>
-            <input type="number" class="form-control" name="totalMoneyInvested" id="field_totalMoneyInvested"
-                [(ngModel)]="investor.totalMoneyInvested"  />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="unchainedApp.investor.accountId" for="field_accountId">Account Id</label>
-            <input type="number" class="form-control" name="accountId" id="field_accountId"
-                [(ngModel)]="investor.accountId"  />
-        </div>
-
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">

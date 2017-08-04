@@ -29,20 +29,20 @@ public class InvestorServiceImpl implements InvestorService{
     private final Logger log = LoggerFactory.getLogger(InvestorServiceImpl.class);
 
     private final InvestorRepository investorRepository;
-    
+
     @Autowired
     private ExtendedUserRepository extendedUserRepository;
-    
+
     @Autowired
     private  DividendsContractService dividendsContractService;
-    
+
     @Autowired
     private  DividendsContractConfiguration dividendsContractConfiguration;
 
-    
+
     public InvestorServiceImpl(InvestorRepository investorRepository) {
         this.investorRepository = investorRepository;
-        
+
     }
 
     /**
@@ -70,7 +70,7 @@ public class InvestorServiceImpl implements InvestorService{
         investors = setInvestorsInformation(investors);
         return investors;
     }
-    
+
     //TODO move to repositoryImpl
     public List<Investor> setInvestorsInformation(List<Investor> investors){
     	DividendsContract contract= dividendsContractConfiguration.getContract();
@@ -106,9 +106,9 @@ public class InvestorServiceImpl implements InvestorService{
         investor = setInvestorInformation(investor);
         return investor;
     }
-    
+
     //TODO put in repositoryImplementation
-    
+
     public Investor setInvestorInformation(Investor investor){
     	DividendsContract contract= dividendsContractConfiguration.getContract();
     	List<ExtendedUser> users = extendedUserRepository.findAll();
@@ -138,7 +138,9 @@ public class InvestorServiceImpl implements InvestorService{
     @Transactional(readOnly = true)
     public List<Investor> findByAccountId(Long accountId) {
         log.debug("Request to get Investor by accountId : {}", accountId);
-        return investorRepository.findByAccountId(accountId);
+        List<Investor> investors =  investorRepository.findByAccountId(accountId);
+        investors = setInvestorsInformation(investors);
+        return investors;
     }
 
     /**
