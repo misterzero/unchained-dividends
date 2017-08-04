@@ -2,8 +2,10 @@ package com.ippon.unchained.web.rest;
 
 import com.ippon.unchained.UnchainedApp;
 
+import com.ippon.unchained.config.DividendsContractConfiguration;
 import com.ippon.unchained.domain.Investor;
 import com.ippon.unchained.repository.InvestorRepository;
+import com.ippon.unchained.service.DividendsContractService;
 import com.ippon.unchained.service.InvestorService;
 import com.ippon.unchained.service.UserService;
 import com.ippon.unchained.web.rest.errors.ExceptionTranslator;
@@ -64,6 +66,12 @@ public class InvestorResourceIntTest {
     private InvestorService investorService;
 
     @Autowired
+    private DividendsContractService dividendsContractService;
+
+    @Autowired
+    private DividendsContractConfiguration dividendsContractConfiguration;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -85,7 +93,7 @@ public class InvestorResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        InvestorResource investorResource = new InvestorResource(investorService, userService);
+        InvestorResource investorResource = new InvestorResource(investorService, userService, dividendsContractService, dividendsContractConfiguration);
         this.restInvestorMockMvc = MockMvcBuilders.standaloneSetup(investorResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

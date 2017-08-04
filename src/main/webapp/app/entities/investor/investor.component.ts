@@ -13,7 +13,7 @@ import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
     templateUrl: './investor.component.html'
 })
 export class InvestorComponent implements OnInit, OnDestroy {
-investors: Investor[];
+    investors: Investor[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
