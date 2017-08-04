@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Rx';
+import {Injectable} from '@angular/core';
+import {Http, Response} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 
-import { ResponseWrapper, createRequestOption } from '../shared';
+import {ResponseWrapper, createRequestOption} from '../shared';
+import {Master} from '../entities/master.model';
 
 @Injectable()
 export class HomeService {
 
-    private resourceUrl = 'api/dash';
+    private resourceUrl = 'api/tokens';
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+    }
 
     // create(investor: Investor): Observable<Investor> {
     //     const copy = this.convert(investor);
@@ -37,10 +39,10 @@ export class HomeService {
             .map((res: Response) => this.convertResponse(res));
     }
 
-    findMasterMoneyInvested(): Observable<String> {
-      return this.http.get(this.resourceUrl).map((res: Response) => {
-        return res.json();
-      });
+    findMasterMoneyInvested(): Observable<Master> {
+        return this.http.get(this.resourceUrl).map((res: Response) => {
+            return res.json();
+        });
     }
 
     delete(id: number): Observable<Response> {

@@ -1,27 +1,36 @@
 package com.ippon.unchained.config;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.annotation.PostConstruct;
 
+import com.ippon.unchained.domain.Dividend;
 import com.ippon.unchained.domain.ExtendedUser;
 import com.ippon.unchained.domain.Investor;
+import com.ippon.unchained.domain.RoundOfInvestment;
 import com.ippon.unchained.domain.User;
 import com.ippon.unchained.service.ExtendedUserService;
 import com.ippon.unchained.service.InvestorService;
+import com.ippon.unchained.service.RoundOfInvestmentService;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.web3j.abi.datatypes.Address;
+import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 
+import com.ippon.unchained.service.DividendService;
 import com.ippon.unchained.service.DividendsContractService;
+import com.ippon.unchained.service.DummyClass;
 import com.ippon.unchained.service.impl.DividendsContractServiceImpl;
 import com.ippon.unchained.service.solidity.DividendsContract;
 
@@ -47,6 +56,12 @@ public class DividendsContractConfiguration {
 
     @Autowired
     public InvestorService investorService;
+    
+    @Autowired
+    public RoundOfInvestmentService roundOfInvestmentService;
+   
+    @Autowired
+    public DividendService dividendService;
 
 	public DividendsContract  deployDividends(){
         LOGGER.info("Deploying Dividends");
@@ -100,7 +115,48 @@ public class DividendsContractConfiguration {
 	public DividendsContract getContract(){
 		DividendsContract contract = deployDividends();
 		dividendsContractService.init(contract,ADDRESS1,ADDRESS2,ADDRESS3);
+		dataOnInit(contract);
 		return contract;
+	}
+	
+	public void dataOnInit(DividendsContract contract){
+		for(int k=0;k<10;k++){
+			int i1=50*k*k+70;
+			int i2=60*k*k+70;
+			int i3=40*k*k+70;
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dividendsContractService.updateInvestorMoneyInvested(contract, ADDRESS1, new Uint256(50*k+70));
+			dividendsContractService.updateInvestorMoneyInvested(contract, ADDRESS2, new Uint256(60*k+70));
+			dividendsContractService.updateInvestorMoneyInvested(contract, ADDRESS3, new Uint256(40*k+70));
+			dividendsContractService.masterRoundOfInvestment(contract, new Uint256(1000+k*300));
+			
+			if(roundOfInvestmentService.findAll().size()<10){
+				RoundOfInvestment roundOfInvestment = new RoundOfInvestment();
+				roundOfInvestment.setEndDate(LocalDate.of(2017, Month.JULY, 15+k));
+				roundOfInvestment.setTokenValue(dividendsContractService.getMasterValueOfOneToken(contract).getValue().intValue());
+				roundOfInvestment.setTotalMoneyInvested((double)(i1+i2+i3));
+				roundOfInvestmentService.save(roundOfInvestment);
+			}
+			int amount = 500+50*k*k;
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dividendsContractService.distributeDividends(contract, new Uint256(amount));
+			if(dividendService.findAll().size()<10){
+				Dividend dividend= new Dividend();
+				dividend.setDate(LocalDate.of(2017, Month.JULY, 15+k));
+				dividend.setAmount((double)amount);
+				dividendService.save(dividend);
+			}
+		}
 	}
 
 }
