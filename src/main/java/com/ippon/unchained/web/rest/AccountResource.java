@@ -1,14 +1,17 @@
 package com.ippon.unchained.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.ippon.unchained.config.DividendsContractConfiguration;
 import com.ippon.unchained.domain.ExtendedUser;
 import com.ippon.unchained.domain.Investor;
 import com.ippon.unchained.domain.User;
 import com.ippon.unchained.repository.UserRepository;
 import com.ippon.unchained.security.SecurityUtils;
+import com.ippon.unchained.service.DividendsContractService;
 import com.ippon.unchained.service.MailService;
 import com.ippon.unchained.service.UserService;
 import com.ippon.unchained.service.dto.UserDTO;
+import com.ippon.unchained.service.solidity.DividendsContract;
 import com.ippon.unchained.web.rest.vm.KeyAndPasswordVM;
 import com.ippon.unchained.web.rest.vm.ManagedUserVM;
 import com.ippon.unchained.web.rest.util.HeaderUtil;
@@ -22,6 +25,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.web3j.abi.datatypes.Address;
+import org.web3j.abi.datatypes.generated.Uint256;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -49,6 +54,12 @@ public class AccountResource {
     private final UserService userService;
 
     private final MailService mailService;
+    
+    @Autowired
+    private DividendsContractService dividendsContractService;
+    
+    @Autowired
+    private DividendsContractConfiguration dividendsContractConfiguration;
     
     public AccountResource(UserRepository userRepository, UserService userService,
             MailService mailService) {
@@ -89,7 +100,10 @@ public class AccountResource {
                     Investor i = new Investor();
                     i.setAccountId(e.getAccountId());
                     i.setMoneyInvested(0);
+                    Address investorAddress = new Address(address);
+                    Uint256 moneyInvested = new Uint256(0); 
                     try {
+                    	newInvestorChaicode(investorAddress, moneyInvested);
 						extendedUserResource.createExtendedUser(e);
 						investorResource.createInvestor(i);
 					} catch (URISyntaxException e1) {
@@ -100,6 +114,11 @@ public class AccountResource {
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
         );
+    }
+    
+    public void newInvestorChaicode(Address investorAddress, Uint256 moneyInvested){
+    	DividendsContract contract= dividendsContractConfiguration.getContract();
+    	dividendsContractService.newInvestor(contract, investorAddress, moneyInvested);
     }
 
     /**
