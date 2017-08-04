@@ -138,21 +138,9 @@ public class InvestorServiceImpl implements InvestorService{
     @Transactional(readOnly = true)
     public List<Investor> findByAccountId(Long accountId) {
         log.debug("Request to get Investor by accountId : {}", accountId);
-        return investorRepository.findByAccountId(accountId);
-    }
-
-    /**
-     *  Get one investor by id.
-     *
-     *  @param accountId the id of the user
-     *  @return the investor entity corresponding to this user
-     */
-    @Transactional(readOnly = true)
-    public Investor findOneByAccountId(Long accountId) {
-        log.debug("Request to get Investor by accountId : {}", accountId);
-        Investor investor = investorRepository.findByAccountId(accountId).get(0);
-        investor = setInvestorInformation(investor);
-        return investor;
+        List<Investor> investors =  investorRepository.findByAccountId(accountId);
+        investors = setInvestorsInformation(investors);
+        return investors;
     }
 
     /**
