@@ -5,6 +5,7 @@ import { ChartsModule } from 'ng2-charts';
 import { UnchainedSharedModule } from '../shared';
 
 import { HOME_ROUTE, HomeComponent } from './';
+import { HomeService } from './';
 
 @NgModule({
     imports: [
@@ -18,6 +19,7 @@ import { HOME_ROUTE, HomeComponent } from './';
     entryComponents: [
     ],
     providers: [
+      HomeService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
