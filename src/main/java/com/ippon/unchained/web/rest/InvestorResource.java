@@ -116,7 +116,7 @@ public class InvestorResource {
             investor = investorService.findOne(id);
         } else {
             // ...but regular users should only be able to view their own investor details.
-            investor = investorService.findByAccountId(currentUser.getId()).get(0);
+            investor = investorService.findOneByAccountId(currentUser.getId());
         }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(investor));
     }
