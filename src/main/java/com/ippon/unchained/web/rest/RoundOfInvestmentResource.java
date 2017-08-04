@@ -92,11 +92,10 @@ public class RoundOfInvestmentResource {
     	long n = d2-d1;
     	log.info("time remaining before execution of the script on the chaincode: "+n);
     	try {
-			Thread.sleep(10000);
+			Thread.sleep(90000);
 			double valueOfTheCompany = DummyClass.getValueOfTheCompany();
 			Uint256 currentValueOfTheCompany =new Uint256((long)(valueOfTheCompany));
 			DividendsContract contract= dividendsContractConfiguration.getContract();
-			double moneyInvestedBefore = dividendsContractService.getMasterTotalMoneyInvested(contract).getValue().doubleValue();
 			double investorTotal = 0;
             for (Investor i : investorService.findAll()) {
                 Address address = new Address(extendedUserService.findByAccountId(i.getAccountId()).get(0).getAddress());
@@ -107,8 +106,6 @@ public class RoundOfInvestmentResource {
                 investorService.save(i);
             }
 			dividendsContractService.masterRoundOfInvestment(contract, currentValueOfTheCompany);
-			double moneyInvestedAfter = dividendsContractService.getMasterTotalMoneyInvested(contract).getValue().doubleValue();
-			double moneyInvestedDuringThisRound = moneyInvestedAfter-moneyInvestedBefore;
 			log.info("round of investment executed with the value of the company: " +valueOfTheCompany);
 	        r.setTokenValue(dividendsContractService.getMasterValueOfOneToken(contract).getValue().intValue());
 	        r.setTotalMoneyInvested(investorTotal);

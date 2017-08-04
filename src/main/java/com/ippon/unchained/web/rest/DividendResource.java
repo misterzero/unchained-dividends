@@ -69,7 +69,7 @@ public class DividendResource {
         d.setAmount(amount);
         d.setDate(LocalDate.now());
         executeDistributeDividends(amount);
-        Thread.sleep(4000);
+        Thread.sleep(180000);
         return createDividend(d);
     }
     
