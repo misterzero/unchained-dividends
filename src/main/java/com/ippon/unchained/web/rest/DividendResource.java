@@ -75,7 +75,7 @@ public class DividendResource {
     
     public void executeDistributeDividends(double dividendsAmount){
     	log.info("distribution of dividends in the chaincode begins");
-    	Uint256 amount = new Uint256((long)(dividendsAmount)*10);
+    	Uint256 amount = new Uint256((long)(dividendsAmount));
 		DividendsContract contract= dividendsContractConfiguration.getContract();
 		dividendsContractService.distributeDividends(contract, amount);
     }
