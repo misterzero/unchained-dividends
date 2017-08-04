@@ -96,7 +96,6 @@ public class RoundOfInvestmentResource {
 			double valueOfTheCompany = DummyClass.getValueOfTheCompany();
 			Uint256 currentValueOfTheCompany =new Uint256((long)(valueOfTheCompany));
 			DividendsContract contract= dividendsContractConfiguration.getContract();
-			double moneyInvestedBefore = dividendsContractService.getMasterTotalMoneyInvested(contract).getValue().doubleValue();
 			double investorTotal = 0;
             for (Investor i : investorService.findAll()) {
                 investorTotal += i.getMoneyInvested();
@@ -104,8 +103,6 @@ public class RoundOfInvestmentResource {
                 investorService.save(i);
             }
 			dividendsContractService.masterRoundOfInvestment(contract, currentValueOfTheCompany);
-			double moneyInvestedAfter = dividendsContractService.getMasterTotalMoneyInvested(contract).getValue().doubleValue();
-			double moneyInvestedDuringThisRound = moneyInvestedAfter-moneyInvestedBefore;
 			log.info("round of investment executed with the value of the company: " +valueOfTheCompany);
 	        r.setTokenValue(dividendsContractService.getMasterValueOfOneToken(contract).getValue().intValue());
 	        r.setTotalMoneyInvested(investorTotal);
