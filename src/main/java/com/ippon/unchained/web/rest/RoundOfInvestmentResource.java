@@ -92,7 +92,7 @@ public class RoundOfInvestmentResource {
     	long n = d2-d1;
     	log.info("time remaining before execution of the script on the chaincode: "+n);
     	try {
-			Thread.sleep(10000);
+			Thread.sleep(90000);
 			double valueOfTheCompany = DummyClass.getValueOfTheCompany();
 			Uint256 currentValueOfTheCompany =new Uint256((long)(valueOfTheCompany));
 			DividendsContract contract= dividendsContractConfiguration.getContract();
