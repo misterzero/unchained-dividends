@@ -4,11 +4,13 @@ import {Observable} from 'rxjs/Rx';
 
 import {ResponseWrapper, createRequestOption} from '../shared';
 import {Master} from '../entities/master.model';
+import {Dividends} from '../entities/dividends.model';
 
 @Injectable()
 export class HomeService {
 
     private resourceUrl = 'api/tokens';
+    private dividenUrl = 'api/dividends';
 
     constructor(private http: Http) {
     }
@@ -43,6 +45,12 @@ export class HomeService {
         return this.http.get(this.resourceUrl).map((res: Response) => {
             return res.json();
         });
+    }
+
+    findTotalDividends(): Observable<Dividends> {
+      return this.http.get(this.dividenUrl).map((res: Response) => {
+          return res.json();
+      });
     }
 
     delete(id: number): Observable<Response> {

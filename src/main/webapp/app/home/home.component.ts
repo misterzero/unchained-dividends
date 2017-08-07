@@ -5,6 +5,7 @@ import { HomeService } from './home.service';
 import { InvestorService } from '../entities/investor/investor.service';
 import { Account, LoginModalService, Principal } from '../shared';
 import { Investor } from '../entities/investor/investor.model';
+import {Dividends} from '../entities/dividends.model';
 
 @Component({
     selector: 'jhi-home',
@@ -22,6 +23,14 @@ export class HomeComponent implements OnInit {
     public tokenChartLabels = ['Other Tokens', 'Your Tokens'];
     public tokenChartData = [1, 1];
     public tokenChartType = 'doughnut';
+    public dividendLabel = [];
+    public dividendChartType = 'line';
+    public dividendChartOptions: any = {
+      responsive: true
+    };
+    public dividendChartData: Array<any> = [
+      { data: [], label: '' }
+    ];
 
     constructor(private principal: Principal,
                 private loginModalService: LoginModalService,
@@ -46,6 +55,14 @@ export class HomeComponent implements OnInit {
                 this.tokenChartData = [(tokens.value - investor.tokens), investor.tokens];
             });
         });
+
+        this.homeService.findTotalDividends().subscribe((dividends) => {
+            this.dividendChartData = [{data: Array.prototype.map.call(dividends, (a) => a.amount)
+              .filter(function(dividen){
+                return dividen;
+            }), label: 'Total Dividends'}];
+            this.dividendLabel = Array.from(new Array(this.dividendChartData[0].data.length), (val, index) => index + 1);
+        });
     }
 
     public tokenChartClicked(e: any): void {
@@ -54,6 +71,14 @@ export class HomeComponent implements OnInit {
 
     public tokenChartHovered(e: any): void {
         console.log(e);
+    }
+
+    public chartClicked(e: any): void {
+      console.log(e);
+    }
+
+    public chartHovered(e: any): void {
+      console.log(e);
     }
 
     registerAuthenticationSuccess() {
