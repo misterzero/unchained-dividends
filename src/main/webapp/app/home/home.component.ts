@@ -60,6 +60,7 @@ export class HomeComponent implements OnInit {
         this.eventManager.subscribe('authenticationSuccess', (message) => {
             this.principal.identity().then((account) => {
                 this.account = account;
+                this.loadAll();
             });
         });
     }
