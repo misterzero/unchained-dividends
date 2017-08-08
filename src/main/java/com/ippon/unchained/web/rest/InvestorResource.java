@@ -131,19 +131,6 @@ public class InvestorResource {
     }
 
     /**
-     * GET  /tokens : get the "id" investor.
-     * TODO: Move this to its own resource - this is NOT the right place for this function.
-     *
-     * @return the ResponseEntity with status 200 (OK) and with body the total tokens, or with status 404 (Not Found)
-     */
-    @GetMapping("/tokens")
-    @Timed
-    public ResponseEntity<Uint256> getMasterTotalTokens() {
-        log.debug("REST request to get Master Total Tokens");
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(dividendsContractService.getMasterTotalTokens(dividendsContractConfiguration.getContract())));
-    }
-
-    /**
      * DELETE  /investors/:id : delete the "id" investor.
      *
      * @param id the id of the investor to delete
