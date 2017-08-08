@@ -22,19 +22,17 @@
                                 (chartClick)="tokenChartClicked($event)"></canvas>
                     </div>
                 </div>
-            </div>
-            <div class="row" *ngSwitchCase="true">
-              <div class="col-md-6">
-                <div style="display: block;">
-                <canvas baseChart width="400" height="400"
-                            [datasets]="dividendChartData"
-                            [labels]="dividendLabel"
-                            [options]="dividendChartOptions"
-                            [chartType]="dividendChartType"
-                            (chartHover)="chartHovered($event)"
-                            (chartClick)="chartClicked($event)"></canvas>
+                <div class="col-md-6">
+                    <div style="display: block;">
+                        <canvas baseChart width="400" height="400"
+                                [datasets]="dividendChartData"
+                                [labels]="dividendLabel"
+                                [options]="dividendChartOptions"
+                                [chartType]="dividendChartType"
+                                (chartHover)="chartHovered($event)"
+                                (chartClick)="chartClicked($event)"></canvas>
+                    </div>
                 </div>
-              </div>
             </div>
             <div class="alert alert-warning" *ngSwitchCase="false">
                 <span jhiTranslate="global.messages.info.authenticated.prefix">If you want to </span>
