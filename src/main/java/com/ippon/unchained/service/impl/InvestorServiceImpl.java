@@ -103,6 +103,9 @@ public class InvestorServiceImpl implements InvestorService{
     public Investor findOne(Long id) {
         log.debug("Request to get Investor : {}", id);
         Investor investor = investorRepository.findOne(id);
+        if (investor == null) {
+            return null;
+        }
         investor = setInvestorInformation(investor);
         return investor;
     }
