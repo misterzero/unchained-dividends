@@ -3,10 +3,10 @@ This application was generated using JHipster 4.5.1, you can find documentation 
 
 ## Development
 
-Before configuring dependencies to build this project, you will need to set up an environment, byt following the below steps:
+Before configuring dependencies to build this project, you will need to set up an environment by following the steps below:
 
-1. [TestRPC]: We need ot install a local ethereum network
-    - Once installed, run the below command in a seperate terminal with default accounts:
+1. [TestRPC]: We need to install a local Ethereum network
+    - Once installed, run the below command in a separate terminal with default accounts:
     
         testrpc -d
     
