@@ -1,0 +1,35 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "tokens",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "dividendsEarned",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "isInvestor",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "moneyInvested",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "totalMoneyInvested",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "accountId",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20170727144608",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "investor",
+    "pagination": "no"
+}

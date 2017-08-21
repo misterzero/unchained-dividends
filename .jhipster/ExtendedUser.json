@@ -1,0 +1,19 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "accountId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "address",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20170727174457",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "extended_user",
+    "pagination": "no"
+}

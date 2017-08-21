@@ -1,0 +1,60 @@
+<div>
+    <h2>
+        <span jhiTranslate="unchainedApp.roundOfInvestment.home.title">Round Of Investments</span>
+        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn btn-primary float-right create-round-of-investment" [routerLink]="['/', { outlets: { popup: ['round-of-investment-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="unchainedApp.roundOfInvestment.home.createLabel">
+            Create new Round Of Investment
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="roundOfInvestments">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="unchainedApp.roundOfInvestment.endDate">End Date</span></th>
+            <th><span jhiTranslate="unchainedApp.roundOfInvestment.totalMoneyInvested">Total Money Invested</span></th>
+            <th><span jhiTranslate="unchainedApp.roundOfInvestment.tokenValue">Token Value</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let roundOfInvestment of roundOfInvestments ;trackBy: trackId">
+                <td><a [routerLink]="['../round-of-investment', roundOfInvestment.id ]">{{roundOfInvestment.id}}</a></td>
+                <td>{{roundOfInvestment.endDate | date:'mediumDate'}}</td>
+                <td>{{roundOfInvestment.totalMoneyInvested}}</td>
+                <td>{{roundOfInvestment.tokenValue}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../round-of-investment', roundOfInvestment.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'round-of-investment/'+ roundOfInvestment.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'round-of-investment/'+ roundOfInvestment.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

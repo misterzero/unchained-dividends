@@ -1,0 +1,35 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myRoundOfInvestmentLabel" jhiTranslate="unchainedApp.roundOfInvestment.home.createOrEditLabel">Create or edit a Round Of Investment</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!roundOfInvestment.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="roundOfInvestment.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="unchainedApp.roundOfInvestment.endDate" for="field_endDate">End Date</label>
+            <div class="input-group">
+                <input id="field_endDate" type="text" class="form-control" name="endDate" ngbDatepicker  #endDateDp="ngbDatepicker" [(ngModel)]="roundOfInvestment.endDate"
+                />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" (click)="endDateDp.toggle()"><i class="fa fa-calendar"></i></button>
+                </span>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit" [disabled]="editForm.form.invalid" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

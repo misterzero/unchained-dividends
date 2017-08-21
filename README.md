@@ -3,6 +3,13 @@ This application was generated using JHipster 4.5.1, you can find documentation 
 
 ## Development
 
+Before configuring dependencies to build this project, you will need to set up an environment by following the steps below:
+
+1. [TestRPC]: We need to install a local Ethereum network
+    - Once installed, run the below command in a separate terminal with default accounts:
+    
+        testrpc -d
+    
 Before you can build this project, you must install and configure the following dependencies on your machine:
 
 1. [Node.js][]: We use Node to run a development web server and build the project.
@@ -147,3 +154,4 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [Protractor]: https://angular.github.io/protractor/
 [Leaflet]: http://leafletjs.com/
 [DefinitelyTyped]: http://definitelytyped.org/
+[TestRPC]: https://github.com/ethereumjs/testrpc  

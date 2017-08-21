@@ -1,13 +1,17 @@
 package com.ippon.unchained.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-
+import com.ippon.unchained.config.DividendsContractConfiguration;
+import com.ippon.unchained.domain.ExtendedUser;
+import com.ippon.unchained.domain.Investor;
 import com.ippon.unchained.domain.User;
 import com.ippon.unchained.repository.UserRepository;
 import com.ippon.unchained.security.SecurityUtils;
+import com.ippon.unchained.service.DividendsContractService;
 import com.ippon.unchained.service.MailService;
 import com.ippon.unchained.service.UserService;
 import com.ippon.unchained.service.dto.UserDTO;
+import com.ippon.unchained.service.solidity.DividendsContract;
 import com.ippon.unchained.web.rest.vm.KeyAndPasswordVM;
 import com.ippon.unchained.web.rest.vm.ManagedUserVM;
 import com.ippon.unchained.web.rest.util.HeaderUtil;
@@ -15,14 +19,19 @@ import com.ippon.unchained.web.rest.util.HeaderUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.web3j.abi.datatypes.Address;
+import org.web3j.abi.datatypes.generated.Uint256;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import java.net.URISyntaxException;
 import java.util.*;
 
 /**
@@ -31,6 +40,12 @@ import java.util.*;
 @RestController
 @RequestMapping("/api")
 public class AccountResource {
+	
+	@Autowired
+    private  ExtendedUserResource extendedUserResource;
+	
+	@Autowired
+	private InvestorResource investorResource;
 
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
@@ -39,7 +54,13 @@ public class AccountResource {
     private final UserService userService;
 
     private final MailService mailService;
-
+    
+    @Autowired
+    private DividendsContractService dividendsContractService;
+    
+    @Autowired
+    private DividendsContractConfiguration dividendsContractConfiguration;
+    
     public AccountResource(UserRepository userRepository, UserService userService,
             MailService mailService) {
 
@@ -58,7 +79,8 @@ public class AccountResource {
         produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
     public ResponseEntity registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
-
+    	String address = managedUserVM.getFirstName();
+    	managedUserVM.setFirstName(null);
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
 
@@ -72,11 +94,31 @@ public class AccountResource {
                             managedUserVM.getFirstName(), managedUserVM.getLastName(),
                             managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
                             managedUserVM.getLangKey());
-
+                    ExtendedUser e = new ExtendedUser();
+                    e.setAccountId(user.getId());
+                    e.setAddress(address);
+                    Investor i = new Investor();
+                    i.setAccountId(e.getAccountId());
+                    i.setMoneyInvested(0);
+                    Address investorAddress = new Address(address);
+                    Uint256 moneyInvested = new Uint256(0); 
+                    try {
+                    	newInvestorChaicode(investorAddress, moneyInvested);
+						extendedUserResource.createExtendedUser(e);
+						investorResource.createInvestor(i);
+					} catch (URISyntaxException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
                     mailService.sendActivationEmail(user);
                     return new ResponseEntity<>(HttpStatus.CREATED);
                 })
         );
+    }
+    
+    public void newInvestorChaicode(Address investorAddress, Uint256 moneyInvested){
+    	DividendsContract contract= dividendsContractConfiguration.getContract();
+    	dividendsContractService.newInvestor(contract, investorAddress, moneyInvested);
     }
 
     /**

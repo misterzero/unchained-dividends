@@ -5,8 +5,13 @@
         "menu": {
             "home": "Home",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+            "invest": "Invest",
             "entities": {
                 "main": "Entities",
+                "investor": "Investor",
+                "dividend": "Dividend",
+                "roundOfInvestment": "Round Of Investment",
+                "extendedUser": "Extended User",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -41,7 +46,9 @@
             "confirmpassword": "New password confirmation",
             "confirmpassword.placeholder": "Confirm the new password",
             "email": "Email",
-            "email.placeholder": "Your email"
+            "email.placeholder": "Your email",
+            "address": "Address",
+            "address.placeholder": "Your address"
         },
         "messages": {
             "info": {
@@ -75,6 +82,11 @@
                     "invalid": "Your email is invalid.",
                     "minlength": "Your email is required to be at least 5 characters.",
                     "maxlength": "Your email cannot be longer than 50 characters."
+                },
+                "address": {
+                    "required": "Your address is required.",
+                    "invalid": "Your address is invalid.",
+                    "length": "Your email is required to be exactly 42 characters."
                 }
             }
         },

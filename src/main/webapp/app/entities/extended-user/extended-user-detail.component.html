@@ -1,0 +1,29 @@
+
+<div *ngIf="extendedUser">
+    <h2 *jhiHasAnyAuthority="'ROLE_ADMIN'"><span jhiTranslate="unchainedApp.extendedUser.detail.title">Extended User</span> {{extendedUser.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details" *jhiHasAnyAuthority="'ROLE_ADMIN'">
+        <dt><span jhiTranslate="unchainedApp.extendedUser.accountId">Account Id</span></dt>
+        <dd>
+            <span>{{extendedUser.accountId}}</span>
+        </dd>
+        <dt><span jhiTranslate="unchainedApp.extendedUser.address">Address</span></dt>
+        <dd>
+            <span>{{extendedUser.address}}</span>
+        </dd>
+    </dl>
+
+    <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button"
+            [routerLink]="['/', { outlets: { popup: 'extended-user/'+ extendedUser.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

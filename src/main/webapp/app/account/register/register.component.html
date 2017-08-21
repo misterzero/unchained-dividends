@@ -15,6 +15,10 @@
                 <strong>Login name already registered!</strong> Please choose another one.
             </div>
 
+            <div class="alert alert-danger" *ngIf="errorAddressExists" jhiTranslate="register.messages.error.inavlidaddress">
+                <strong>Address not valid!</strong> Please enter a valid address.
+            </div>
+
             <div class="alert alert-danger" *ngIf="errorEmailExists" jhiTranslate="register.messages.error.emailexists">
                 <strong>Email is already in use!</strong> Please choose another one.
             </div>
@@ -71,20 +75,35 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" for="address" jhiTranslate="global.form.address">Address</label>
+                    <input type="text" class="form-control" id="address" name="address" #address="ngModel" placeholder="{{'global.form.address.placeholder' | translate}}"
+                           [(ngModel)]="extendedUser.address" minlength=42 maxlength=42 required>
+                    <div *ngIf="address.dirty && address.invalid">
+                        <small class="form-text text-danger" *ngIf="address.errors.required"
+                               jhiTranslate="global.messages.validate.address.required">
+                            Your address is required.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="address.errors.maxlength || address.errors.minlength"
+                               jhiTranslate="global.messages.validate.address.length">
+                            Your address is required to be exactly 42 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" for="password" jhiTranslate="global.form.newpassword">New password</label>
                     <input type="password" class="form-control" id="password" name="password" #password="ngModel" placeholder="{{'global.form.newpassword.placeholder' | translate}}"
-                            [(ngModel)]="registerAccount.password" minlength=4 maxlength=50 required>
+                           [(ngModel)]="registerAccount.password" minlength=4 maxlength=50 required>
                     <div *ngIf="password.dirty && password.invalid">
                         <small class="form-text text-danger" *ngIf="password.errors.required"
-                                jhiTranslate="global.messages.validate.newpassword.required">
+                               jhiTranslate="global.messages.validate.newpassword.required">
                             Your password is required.
                         </small>
                         <small class="form-text text-danger" *ngIf="password.errors.minlength"
-                                jhiTranslate="global.messages.validate.newpassword.minlength">
+                               jhiTranslate="global.messages.validate.newpassword.minlength">
                             Your password is required to be at least 4 characters.
                         </small>
                         <small class="form-text text-danger" *ngIf="password.errors.maxlength"
-                                jhiTranslate="global.messages.validate.newpassword.maxlength">
+                               jhiTranslate="global.messages.validate.newpassword.maxlength">
                             Your password cannot be longer than 50 characters.
                         </small>
                     </div>
